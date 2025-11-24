@@ -1,12 +1,12 @@
-// src/app/app.ts
+// src/app/features/admin/admin-layout/admin-layout.ts
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-root',
+  selector: 'app-admin-layout',
   standalone: true,
   imports: [RouterOutlet],
   template: `<router-outlet></router-outlet>`,
   styles: []
 })
-export class App {} // ✅ Must export as 'App'
+export class AdminLayout {} //  Basic admin layout component

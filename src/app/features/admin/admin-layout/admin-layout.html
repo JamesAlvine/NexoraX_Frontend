@@ -1,0 +1,9 @@
+<!-- Only show full menu if super admin -->
+@if (user.is_super_admin) {
+  <nav class="sidebar-nav">
+    <a routerLink="/admin/super">📊 Dashboard</a>
+    <a routerLink="/admin/super/users">👥 Users</a>
+    <a routerLink="/admin/super/apps">🔌 Apps</a>
+    <a routerLink="/admin/super/org">🏢 Organization</a>
+  </nav>
+}
