@@ -14,25 +14,8 @@ interface LoginResponse {
   selector: 'app-login',
   standalone: true,
   imports: [ReactiveFormsModule],
-  template: `
-    <div class="login-container">
-      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="login-form">
-        <input formControlName="email" placeholder="Email" type="email" />
-        <input formControlName="password" placeholder="Password" type="password" />
-        <button type="submit" [disabled]="isLoading">Sign In</button>
-        @if (errorMessage) {
-          <div class="error">{{ errorMessage }}</div>
-        }
-      </form>
-    </div>
-  `,
-  styles: [`
-    .login-container { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
-    .login-form { display: flex; flex-direction: column; gap: 1rem; width: 300px; }
-    input { padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 4px; }
-    button { padding: 0.75rem; background: #2563eb; color: white; border: none; border-radius: 4px; }
-    .error { color: red; text-align: center; }
-  `]
+  templateUrl: './login.html',
+  styleUrls: ['./login.scss'] 
 })
 export class Login {
   private fb = inject(FormBuilder);
@@ -41,7 +24,7 @@ export class Login {
 
   form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required]]
+    password: ['', [Validators.required, Validators.minLength(8)]]
   });
 
   isLoading = false;
@@ -57,10 +40,8 @@ export class Login {
     this.errorMessage = '';
 
     const { email, password } = this.form.getRawValue();
-    // ✅ Explicitly type response
-    this.api.post<LoginResponse>('auth/login/', { email, password }).subscribe({
-      next: (user) => {
-        console.log('Login success:', user);
+    this.api.login(email, password).subscribe({
+      next: (user: LoginResponse) => {
         if (user.is_super_admin) {
           this.router.navigate(['/admin/super']);
         } else {

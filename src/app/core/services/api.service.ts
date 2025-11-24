@@ -7,44 +7,46 @@ import { catchError } from 'rxjs/operators';
 @Injectable({ providedIn: 'root' })
 export class ApiService {
   private http = inject(HttpClient);
-  private baseUrl = 'http://localhost:8000/api/';
+  private readonly baseUrl = 'http://localhost:8000/api/';
 
-  private getCsrf(): string | null {
+  private getCsrfToken(): string | null {
     return document.cookie.split(';').find(c => c.trim().startsWith('csrftoken='))?.split('=')[1] || null;
   }
 
-  private headers(): HttpHeaders {
+  private buildHeaders(): HttpHeaders {
+    const csrf = this.getCsrfToken();
     return new HttpHeaders({
       'Content-Type': 'application/json',
-      'X-CSRFToken': this.getCsrf() || ''
+      ...(csrf ? { 'X-CSRFToken': csrf } : {})
     });
   }
 
-  // ✅ Return Observable<T>
-  get<T>(url: string): Observable<T> {
-    return this.http.get<T>(`${this.baseUrl}${url}`, {
-      headers: this.headers(),
-      withCredentials: true
-    }).pipe(catchError(e => throwError(() => 'API error')));
-  }
-
-  // ✅ Return Observable<T>
-  post<T>(url: string, body: unknown): Observable<T> {
-    return this.http.post<T>(`${this.baseUrl}${url}`, body, {
-      headers: this.headers(),
-      withCredentials: true
-    }).pipe(catchError(e => throwError(() => 'API error')));
-  }
-
   login(email: string, password: string): Observable<any> {
-    return this.http.post<any>(
+    return this.http.post(
       `${this.baseUrl}auth/login/`,
       { email, password },
-      { headers: this.headers(), withCredentials: true }
+      {
+        headers: this.buildHeaders(),
+        withCredentials: true
+      }
     ).pipe(catchError(e => throwError(() => 'Login failed')));
   }
 
   ensureCsrf(): Observable<any> {
     return this.http.get(`${this.baseUrl}auth/csrf/`, { withCredentials: true });
+  }
+
+  get<T>(url: string): Observable<T> {
+    return this.http.get<T>(`${this.baseUrl}${url}`, {
+      headers: this.buildHeaders(),
+      withCredentials: true
+    }).pipe(catchError(e => throwError(() => 'API error')));
+  }
+
+  post<T>(url: string, body: unknown): Observable<T> {
+    return this.http.post<T>(`${this.baseUrl}${url}`, body, {
+      headers: this.buildHeaders(),
+      withCredentials: true
+    }).pipe(catchError(e => throwError(() => 'API error')));
   }
 }
