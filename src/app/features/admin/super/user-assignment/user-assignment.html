@@ -1,0 +1,32 @@
+<!-- src/app/features/admin/super/user-assignment/user-assignment.html -->
+<div class="assignment-container">
+  <h1>User App Assignment</h1>
+  <table class="user-table">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Assign App</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (user of users; track user.id) {
+        <tr>
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            <select (change)="onAppChange($event, user.id)" class="app-select">
+              <option value="">-- Select App --</option>
+              @for (app of apps; track app) {
+                <option [value]="app">{{ app }}</option>
+              }
+            </select>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+  @if (message) {
+    <div class="alert">{{ message }}</div>
+  }
+</div>

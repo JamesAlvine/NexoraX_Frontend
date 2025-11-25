@@ -1,0 +1,33 @@
+<!-- src/app/features/admin/super/organization/organization.html -->
+<div class="org-container">
+  <h1>Organization Setup</h1>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="org-form">
+    <div class="form-group">
+      <label>Organization Name</label>
+      <input formControlName="name" type="text" placeholder="e.g., Neos NGO" />
+    </div>
+    <div class="form-group">
+      <label>Contact Email</label>
+      <input formControlName="contact_email" type="email" placeholder="admin@ngo.org" />
+    </div>
+    <div class="form-group">
+      <label>Contact Phone</label>
+      <input formControlName="contact_phone" type="tel" placeholder="+254700000000" />
+    </div>
+    <div class="form-group">
+      <label>Timezone</label>
+      <select formControlName="timezone">
+        <option value="Africa/Nairobi">Africa/Nairobi</option>
+        <option value="Africa/Lagos">Africa/Lagos</option>
+        <option value="Africa/Johannesburg">Africa/Johannesburg</option>
+        <option value="UTC">UTC</option>
+      </select>
+    </div>
+    <button type="submit" [disabled]="isLoading" class="btn btn-primary">
+      {{ isLoading ? 'Saving...' : 'Save Organization' }}
+    </button>
+    @if (message) {
+      <div class="alert">{{ message }}</div>
+    }
+  </form>
+</div>

@@ -1,9 +1,11 @@
+// src/app/app.routes.ts
 import { Routes } from '@angular/router';
 import { Login } from './features/auth/login/login';
 import { AdminLayout } from './features/admin/admin-layout/admin-layout';
 import { SuperDashboard } from './features/admin/super/super-dashboard/super-dashboard';
-import { UserList } from './features/admin/super/user-management/user-list'; // ✅ Must match export
-import { AddUser } from './features/admin/super/user-management/add-user/add-user';
+import { OrganizationComponent } from './features/admin/super/organization/organization';
+import { UserAssignmentComponent } from './features/admin/super/user-assignment/user-assignment';
+import { HrList } from './features/hr/hr-list/hr-list';
 
 export const routes: Routes = [
   { path: 'login', component: Login },
@@ -12,10 +14,12 @@ export const routes: Routes = [
     component: AdminLayout,
     children: [
       { path: 'super', component: SuperDashboard },
-      { path: 'super/users', component: UserList },
-      { path: 'super/users/new', component: AddUser },
+      { path: 'super/organization', component: OrganizationComponent },
+      { path: 'super/users', component: UserAssignmentComponent },
+      { path: 'hr', component: HrList },
       { path: '', redirectTo: 'super', pathMatch: 'full' }
     ]
   },
-  { path: '', redirectTo: '/login', pathMatch: 'full' }
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '**', redirectTo: '/login' }
 ];

@@ -1,52 +1,52 @@
 // src/app/features/hr/hr-list/hr-list.ts
-import { Component } from '@angular/core';
-import { MatTableModule } from '@angular/material/table';
-import { MatCardModule } from '@angular/material/card';
+import { Component, inject } from '@angular/core';
+import { ApiService } from '../../../core/services/api.service';
+import { CommonModule } from '@angular/common';
+
+interface Staff {
+  id: number;
+  username: string;
+  email: string;
+}
 
 @Component({
   selector: 'app-hr-list',
   standalone: true,
-  imports: [MatTableModule, MatCardModule],
+  imports: [CommonModule],
   template: `
-    <div class="dashboard-container">
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title>HR - Staff Management</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <table mat-table [dataSource]="staff" class="mat-elevation-z0">
-            <ng-container matColumnDef="email">
-              <th mat-header-cell *matHeaderCellDef>Email</th>
-              <td mat-cell *matCellDef="let element">{{ element.email }}</td>
-            </ng-container>
-            <ng-container matColumnDef="department">
-              <th mat-header-cell *matHeaderCellDef>Department</th>
-              <td mat-cell *matCellDef="let element">{{ element.department }}</td>
-            </ng-container>
-            <ng-container matColumnDef="position">
-              <th mat-header-cell *matHeaderCellDef>Position</th>
-              <td mat-cell *matCellDef="let element">{{ element.position }}</td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-          </table>
-        </mat-card-content>
-      </mat-card>
+    <div class="module">
+      <h1>HR - Staff Directory</h1>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (user of staff; track user.id) {
+            <tr>
+              <td>{{ user.username }}</td>
+              <td>{{ user.email }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
     </div>
   `,
   styles: [`
-    table {
-      width: 100%;
-    }
-    .mat-mdc-header-cell {
-      font-weight: 600;
-    }
+    .module { padding: 2rem; }
+    .data-table { width: 100%; background: var(--card); border-radius: var(--radius); }
+    .data-table th, .data-table td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--border); }
   `]
 })
 export class HrList {
-  displayedColumns = ['email', 'department', 'position'];
-  staff = [
-    { email: 'james@ngo.org', department: 'Admin', position: 'Super Admin' },
-    { email: 'hr@ngo.org', department: 'Human Resources', position: 'Manager' }
-  ];
+  private api = inject(ApiService);
+  staff: Staff[] = [];
+
+  ngOnInit() {
+    this.api.get<Staff[]>('hr/staff/').subscribe(data => {
+      this.staff = data;
+    });
+  }
 }

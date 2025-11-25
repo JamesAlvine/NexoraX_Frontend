@@ -1,0 +1,43 @@
+/* src/app/features/admin/super/user-assignment/user-assignment.scss */
+.assignment-container {
+  padding: 2rem;
+}
+
+.user-table {
+  width: 100%;
+  background: var(--card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  margin-top: 1.5rem;
+}
+
+.user-table th,
+.user-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.user-table th {
+  background: var(--bg);
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.app-select {
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--card);
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.alert {
+  margin-top: 1.5rem;
+  padding: 0.75rem;
+  background: #dbeafe;
+  color: #1d4ed8;
+  border-radius: 8px;
+}
