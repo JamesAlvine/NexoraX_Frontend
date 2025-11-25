@@ -1,15 +1,17 @@
-// frontend/src/app/features/auth/login/login.ts
-import { Component, inject } from '@angular/core';
+// src/app/features/auth/login/login.ts
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core'; // ✅ ADDED IMPORT
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from '../../../core/services/api.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './login.html',
-  styleUrls: ['./login.scss']
+  styleUrl: './login.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush // ✅ NOW RECOGNIZED
 })
 export class Login {
   private fb = inject(FormBuilder);
@@ -25,7 +27,6 @@ export class Login {
   errorMessage = '';
 
   constructor() {
-    // Ensure CSRF cookie is set before login
     this.api.ensureCsrf().subscribe();
   }
 
@@ -35,20 +36,15 @@ export class Login {
     this.errorMessage = '';
 
     const { email, password } = this.form.getRawValue();
-    
     this.api.login(email, password).subscribe({
-      next: (response) => {
-        console.log('✅ Login response:', response); // 🔍 CHECK THIS IN CONSOLE
-        
-        // Redirect based on role
-        if (response?.is_super_admin === true) {
+      next: (user) => {
+        if (user.is_super_admin) {
           this.router.navigate(['/admin/super']);
         } else {
           this.router.navigate(['/user/dashboard']);
         }
       },
-      error: (err) => {
-        console.error('❌ Login error:', err);
+      error: () => {
         this.errorMessage = 'Invalid email or password.';
         this.isLoading = false;
       }

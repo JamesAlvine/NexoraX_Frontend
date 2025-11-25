@@ -1,9 +1,57 @@
-<!-- Only show full menu if super admin -->
-@if (user.is_super_admin) {
-  <nav class="sidebar-nav">
-    <a routerLink="/admin/super">📊 Dashboard</a>
-    <a routerLink="/admin/super/users">👥 Users</a>
-    <a routerLink="/admin/super/apps">🔌 Apps</a>
-    <a routerLink="/admin/super/org">🏢 Organization</a>
-  </nav>
-}
+<!-- src/app/features/admin/admin-layout/admin-layout.html -->
+<div class="layout">
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="menu-toggle" (click)="toggleSidebar()">☰</button>
+      <h1 class="logo">nexoraX</h1>
+    </div>
+    <div class="topbar-right">
+      <button class="icon-btn" (click)="toggleDarkMode()" title="Toggle theme">
+        @if (isDark()) {
+          <span>☀️</span>
+        } @else {
+          <span>🌙</span>
+        }
+      </button>
+      <div class="user-profile">
+        <span>James</span>
+        <span class="badge">👑</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="main-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <nav class="nav">
+        <a routerLink="/admin/super" routerLinkActive="active" class="nav-item">
+          <span class="nav-icon">📊</span>
+          <span>Dashboard</span>
+        </a>
+        <a routerLink="/admin/hr" routerLinkActive="active" class="nav-item">
+          <span class="nav-icon">👥</span>
+          <span>HR & Staff</span>
+        </a>
+        <a routerLink="/admin/volunteers" routerLinkActive="active" class="nav-item">
+          <span class="nav-icon">🤝</span>
+          <span>Volunteers</span>
+        </a>
+        <a routerLink="/admin/leave" routerLinkActive="active" class="nav-item">
+          <span class="nav-icon">📝</span>
+          <span>Leave Requests</span>
+        </a>
+        <a routerLink="/admin/crm" routerLinkActive="active" class="nav-item">
+          <span class="nav-icon">📞</span>
+          <span>CRM</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Page Content -->
+    <main class="content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
