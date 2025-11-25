@@ -1,96 +1,124 @@
 // src/app/features/admin/super/super-dashboard/super-dashboard.ts
-import { Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
-import { ApiService } from '../../../../core/services/api.service';
-
-interface DashboardStats {
-  organizations: number;
-  total_users: number;
-  active_apps: number;
-  zoho_integrations: number;
-}
+import { Component } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-super-dashboard',
   standalone: true,
+  imports: [MatCardModule, MatIconModule, CommonModule],
   template: `
-    <div class="super-dashboard">
-      <h1>Super Admin Console</h1>
-      
+    <div class="dashboard-container">
+      <h1>Super Admin Dashboard</h1>
+
+      <!-- Stats Grid -->
       <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-icon">🏢</div>
-          <div>
-            <div class="stat-label">Organizations</div>
-            <div class="stat-value">{{ stats.organizations }}</div>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon">👥</div>
-          <div>
-            <div class="stat-label">Total Users</div>
-            <div class="stat-value">{{ stats.total_users }}</div>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon">🔌</div>
-          <div>
-            <div class="stat-label">Active Apps</div>
-            <div class="stat-value">{{ stats.active_apps }}</div>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon">🔗</div>
-          <div>
-            <div class="stat-label">Zoho Integrations</div>
-            <div class="stat-value">{{ stats.zoho_integrations }}</div>
-          </div>
-        </div>
+        <mat-card>
+          <mat-card-content class="stat">
+            <mat-icon color="primary">group</mat-icon>
+            <div>
+              <div class="stat-value">42</div>
+              <div class="stat-label">Staff (HR)</div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        <mat-card>
+          <mat-card-content class="stat">
+            <mat-icon color="primary">volunteer_activism</mat-icon>
+            <div>
+              <div class="stat-value">128</div>
+              <div class="stat-label">Volunteers</div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        <mat-card>
+          <mat-card-content class="stat">
+            <mat-icon color="primary">event</mat-icon>
+            <div>
+              <div class="stat-value">7</div>
+              <div class="stat-label">Pending Leave</div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        <mat-card>
+          <mat-card-content class="stat">
+            <mat-icon color="primary">assessment</mat-icon>
+            <div>
+              <div class="stat-value">14</div>
+              <div class="stat-label">Active Projects</div>
+            </div>
+          </mat-card-content>
+        </mat-card>
       </div>
 
-      <div class="quick-actions">
-        <h2>Quick Actions</h2>
-        <div class="actions-grid">
-          <button (click)="navigate('/admin/super/users')">👥 Manage Users</button>
-          <button (click)="navigate('/admin/super/apps')">⚙️ Configure Apps</button>
-          <button (click)="navigate('/admin/super/org')">🏢 Organization Setup</button>
-          <button (click)="navigate('/admin/super/security')">🔒 Global Security</button>
-        </div>
-      </div>
+      <!-- Recent Activity -->
+      <mat-card class="timeline">
+        <mat-card-header>
+          <mat-card-title>Recent Activity</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="activity-item" *ngFor="let item of recentActivity">
+            <mat-icon>{{ item.icon }}</mat-icon>
+            <div>
+              <strong>{{ item.user }}</strong> {{ item.action }}
+              <div class="time">{{ item.time }}</div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
     </div>
   `,
   styles: [`
-    .super-dashboard { padding: 2rem; }
-    .super-dashboard h1 { margin-bottom: 2rem; color: #1e293b; }
-    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
-    .stat-card { display: flex; gap: 1rem; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
-    .stat-icon { font-size: 2rem; }
-    .stat-label { color: #64748b; font-size: 0.875rem; }
-    .stat-value { font-size: 1.75rem; font-weight: 700; color: #2563eb; }
-    .quick-actions h2 { margin-bottom: 1.5rem; }
-    .actions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
-    .actions-grid button { padding: 1rem; background: #f1f5f9; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; text-align: left; }
-    .actions-grid button:hover { background: #e2e8f0; }
+    .dashboard-container h1 {
+      margin-bottom: 1.5rem;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .stat {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .stat-value {
+      font-size: 1.75rem;
+      font-weight: 700;
+    }
+    .stat-label {
+      color: #666;
+    }
+    .dark-theme .stat-label {
+      color: #ccc;
+    }
+    .timeline {
+      margin-top: 2rem;
+    }
+    .activity-item {
+      display: flex;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid #eee;
+    }
+    .dark-theme .activity-item {
+      border-bottom-color: #333;
+    }
+    .time {
+      font-size: 0.875rem;
+      color: #999;
+    }
+    .dark-theme .time {
+      color: #aaa;
+    }
   `]
 })
 export class SuperDashboard {
-  private api = inject(ApiService);
-  private router = inject(Router);
-
-  stats: DashboardStats = {
-    organizations: 0,
-    total_users: 0,
-    active_apps: 0,
-    zoho_integrations: 0
-  };
-
-  ngOnInit() {
-    this.api.get<DashboardStats>('super/dashboard/').subscribe((data) => {
-      this.stats = data;
-    });
-  }
-
-  navigate(path: string) {
-    this.router.navigate([path]);
-  }
+  recentActivity = [
+    { user: 'James', action: 'Approved leave for Sarah', time: '2 min ago', icon: 'check_circle' },
+    { user: 'Admin', action: 'Added new volunteer', time: '15 min ago', icon: 'person_add' },
+    { user: 'System', action: 'CRM sync completed', time: '1 hour ago', icon: 'sync' }
+  ];
 }

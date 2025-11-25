@@ -4,18 +4,12 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from '../../../core/services/api.service';
 
-interface LoginResponse {
-  id: number;
-  email: string;
-  is_super_admin: boolean;
-}
-
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './login.html',
-  styleUrls: ['./login.scss'] 
+  styleUrls: ['./login.scss']
 })
 export class Login {
   private fb = inject(FormBuilder);
@@ -31,6 +25,7 @@ export class Login {
   errorMessage = '';
 
   constructor() {
+    // Ensure CSRF cookie is set before login
     this.api.ensureCsrf().subscribe();
   }
 
@@ -40,15 +35,20 @@ export class Login {
     this.errorMessage = '';
 
     const { email, password } = this.form.getRawValue();
+    
     this.api.login(email, password).subscribe({
-      next: (user: LoginResponse) => {
-        if (user.is_super_admin) {
+      next: (response) => {
+        console.log('✅ Login response:', response); // 🔍 CHECK THIS IN CONSOLE
+        
+        // Redirect based on role
+        if (response?.is_super_admin === true) {
           this.router.navigate(['/admin/super']);
         } else {
           this.router.navigate(['/user/dashboard']);
         }
       },
-      error: () => {
+      error: (err) => {
+        console.error('❌ Login error:', err);
         this.errorMessage = 'Invalid email or password.';
         this.isLoading = false;
       }
