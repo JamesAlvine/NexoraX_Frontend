@@ -7,46 +7,72 @@ import { catchError } from 'rxjs/operators';
 @Injectable({ providedIn: 'root' })
 export class ApiService {
   private http = inject(HttpClient);
-  private readonly baseUrl = 'http://localhost:8000/api/';
+  private baseUrl = 'http://localhost:8000/api/';
 
+  // ✅ Get CSRF token from cookies
   private getCsrfToken(): string | null {
-    return document.cookie.split(';').find(c => c.trim().startsWith('csrftoken='))?.split('=')[1] || null;
-  }
-
-  private buildHeaders(): HttpHeaders {
-    const csrf = this.getCsrfToken();
-    return new HttpHeaders({
-      'Content-Type': 'application/json',
-      ...(csrf ? { 'X-CSRFToken': csrf } : {})
-    });
-  }
-
-  login(email: string, password: string): Observable<any> {
-    return this.http.post(
-      `${this.baseUrl}auth/login/`,
-      { email, password },
-      {
-        headers: this.buildHeaders(),
-        withCredentials: true
+    const name = 'csrftoken=';
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i].trim();
+      if (c.indexOf(name) === 0) {
+        return c.substring(name.length, c.length);
       }
-    ).pipe(catchError(e => throwError(() => 'Login failed')));
+    }
+    return null;
   }
 
   ensureCsrf(): Observable<any> {
     return this.http.get(`${this.baseUrl}auth/csrf/`, { withCredentials: true });
   }
 
+  login(email: string, password: string): Observable<any> {
+    const csrfToken = this.getCsrfToken();
+    if (!csrfToken) {
+      throw new Error('CSRF token not found');
+    }
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-CSRFToken': csrfToken  // ✅ Must match cookie
+    });
+
+    return this.http.post(
+      `${this.baseUrl}auth/login/`,
+      { email, password },
+      { headers, withCredentials: true }
+    ).pipe(
+      catchError(e => throwError(() => 'Login failed'))
+    );
+  }
+
+  // Generic methods
   get<T>(url: string): Observable<T> {
+    const csrfToken = this.getCsrfToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      ...(csrfToken ? { 'X-CSRFToken': csrfToken } : {})
+    });
     return this.http.get<T>(`${this.baseUrl}${url}`, {
-      headers: this.buildHeaders(),
+      headers,
       withCredentials: true
-    }).pipe(catchError(e => throwError(() => 'API error')));
+    }).pipe(
+      catchError(e => throwError(() => 'API error'))
+    );
   }
 
   post<T>(url: string, body: unknown): Observable<T> {
+    const csrfToken = this.getCsrfToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      ...(csrfToken ? { 'X-CSRFToken': csrfToken } : {})
+    });
     return this.http.post<T>(`${this.baseUrl}${url}`, body, {
-      headers: this.buildHeaders(),
+      headers,
       withCredentials: true
-    }).pipe(catchError(e => throwError(() => 'API error')));
+    }).pipe(
+      catchError(e => throwError(() => 'API error'))
+    );
   }
 }

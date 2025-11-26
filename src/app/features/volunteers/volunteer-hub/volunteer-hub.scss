@@ -1,0 +1,41 @@
+/* #3: Volunteer Hub Styles (SCSS) */
+/* Purpose: Modern, responsive, dark-mode-ready card layout */
+/* Design: Zoho One-inspired with clean spacing, skill tags, shadows */
+
+.hub-container {
+  padding: 2rem;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.skills {
+  margin: 1rem 0;
+}
+
+.skill-tag {
+  display: inline-block;
+  background: #dbeafe;
+  color: #1d4ed8;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
+
+/* Dark mode compatibility via CSS variables */
+[data-theme='dark'] .skill-tag {
+  background: #1e3a8a;
+  color: #bfdbfe;
+}

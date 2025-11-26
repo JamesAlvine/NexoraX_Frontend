@@ -1,0 +1,22 @@
+<!-- #2: Volunteer Hub Template (HTML) -->
+<!-- Purpose: Render volunteer cards with skills and stats -->
+<!-- Structure: Grid of cards, each showing email, skills (tags), availability, hours -->
+<!-- Accessibility: Semantic HTML, proper headings -->
+
+<div class="hub-container">
+  <h1>Volunteer Hub</h1>
+  <div class="cards">
+    @for (vol of volunteers; track vol.user__email) {
+      <div class="card">
+        <h3>{{ vol.user__email }}</h3>
+        <div class="skills">
+          @for (skill of vol.skills; track skill) {
+            <span class="skill-tag">{{ skill }}</span>
+          }
+        </div>
+        <p><strong>Availability:</strong> {{ vol.availability || 'Not set' }}</p>
+        <p><strong>Hours:</strong> {{ vol.hours_contributed }}</p>
+      </div>
+    }
+  </div>
+</div>
