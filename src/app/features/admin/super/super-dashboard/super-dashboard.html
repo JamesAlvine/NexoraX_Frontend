@@ -1,0 +1,96 @@
+<!-- Unique NGO Super Admin Dashboard -->
+<div class="dashboard-container">
+  <!-- Header -->
+  <header class="dashboard-header">
+    <div>
+      <h1 class="dashboard-title">nexoraX Command Center</h1>
+      <p class="subtitle">Manage your NGO operations in one place</p>
+    </div>
+    <div class="header-actions">
+      <!-- Future: Quick actions, notifications -->
+    </div>
+  </header>
+
+  <!-- Module Grid -->
+  <div class="module-grid" (drop)="onDrop($event)" (dragover)="onDragOver($event)">
+    <!-- HR Module -->
+    <div 
+      class="module-card" 
+      draggable="true"
+      (dragstart)="onDragStart($event, 'hr')"
+    >
+      <div class="module-header">
+        <div class="module-icon hr-icon">👥</div>
+        <h2 class="module-title">HR & Staff</h2>
+      </div>
+      <p>Active staff members</p>
+      <div class="module-value">{{ stats.hr }}</div>
+      <div class="module-footer">
+        <span>Last updated just now</span>
+        <button class="view-btn" (click)="navigateTo('hr')">
+          View HR <span>→</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Volunteers -->
+    <div 
+      class="module-card" 
+      draggable="true"
+      (dragstart)="onDragStart($event, 'volunteers')"
+    >
+      <div class="module-header">
+        <div class="module-icon volunteer-icon">🤝</div>
+        <h2 class="module-title">Volunteers</h2>
+      </div>
+      <p>Active volunteers</p>
+      <div class="module-value">{{ stats.volunteers }}</div>
+      <div class="module-footer">
+        <span>12 new this week</span>
+        <button class="view-btn" (click)="navigateTo('volunteers/hub')">
+          View Volunteers <span>→</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Leave Requests -->
+    <div 
+      class="module-card" 
+      draggable="true"
+      (dragstart)="onDragStart($event, 'leave')"
+    >
+      <div class="module-header">
+        <div class="module-icon leave-icon">📝</div>
+        <h2 class="module-title">Leave Requests</h2>
+      </div>
+      <p>Pending approvals</p>
+      <div class="module-value">{{ stats.leavePending }}</div>
+      <div class="module-footer">
+        <span>Next deadline: tomorrow</span>
+        <button class="view-btn" (click)="navigateTo('leave')">
+          View Leave <span>→</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- CRM -->
+    <div 
+      class="module-card" 
+      draggable="true"
+      (dragstart)="onDragStart($event, 'crm')"
+    >
+      <div class="module-header">
+        <div class="module-icon crm-icon">📞</div>
+        <h2 class="module-title">CRM</h2>
+      </div>
+      <p>Donors & beneficiaries</p>
+      <div class="module-value">{{ stats.crmContacts }}</div>
+      <div class="module-footer">
+        <span>24 new this month</span>
+        <button class="view-btn" (click)="navigateTo('crm')">
+          View CRM <span>→</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,135 @@
+/* Unique NGO Admin Dashboard – Modern, Zoho-inspired */
+:host {
+  display: block;
+  height: 100%;
+}
+
+.dashboard-container {
+  padding: 1.5rem;
+  height: 100%;
+  overflow: auto;
+}
+
+/* Header */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.dashboard-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, #4f46e5, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-top: 0.25rem;
+}
+
+/* Module Grid – Draggable */
+.module-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.module-card {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: grab;
+  position: relative;
+  overflow: hidden;
+}
+
+.module-card:active {
+  cursor: grabbing;
+}
+
+.module-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+.module-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.module-icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  color: white;
+}
+
+.hr-icon { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+.volunteer-icon { background: linear-gradient(135deg, #10b981, #059669); }
+.leave-icon { background: linear-gradient(135deg, #f59e0b, #d97706); }
+.crm-icon { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+
+.module-title {
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: var(--text);
+}
+
+.module-value {
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 0.5rem 0;
+  color: var(--text);
+}
+
+.module-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.view-btn {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.view-btn:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .module-grid {
+    grid-template-columns: 1fr;
+  }
+}

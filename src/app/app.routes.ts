@@ -8,7 +8,7 @@ import { Routes } from '@angular/router';
 // Auth
 import { Login } from './features/auth/login/login';
 
-// Admin Layout (shell for all admin pages)
+// Admin Layout
 import { AdminLayout } from './features/admin/admin-layout/admin-layout';
 
 // Super Admin
@@ -18,15 +18,19 @@ import { UserAssignmentComponent } from './features/admin/super/user-assignment/
 
 // HR Module
 import { HrList } from './features/hr/hr-list/hr-list';
+import { LeaveRequestComponent } from './features/hr/leave-request/leave-request';
 
 // Volunteers Module
 import { VolunteerHubComponent } from './features/volunteers/volunteer-hub/volunteer-hub';
 
-export const routes: Routes = [
-  // Public routes
-  { path: 'login', component: Login },
+// ❌ Temporarily comment out future components (not created yet)
+// import { VolunteerHourLogComponent } from './features/volunteers/volunteer-hour-log/volunteer-hour-log';
+// import { CrmDashboardComponent } from './features/crm/crm-dashboard/crm-dashboard';
+// import { RealTimeStatsComponent } from './features/admin/super/real-time-stats/real-time-stats';
+// import { ModuleConfigComponent } from './features/admin/super/module-config/module-config';
 
-  // Admin routes (protected)
+export const routes: Routes = [
+  { path: 'login', component: Login },
   {
     path: 'admin',
     component: AdminLayout,
@@ -36,20 +40,23 @@ export const routes: Routes = [
       { path: 'super/organization', component: OrganizationComponent },
       { path: 'super/users', component: UserAssignmentComponent },
 
-      // HR
+      // HR & Staff
       { path: 'hr', component: HrList },
+      { path: 'hr/leave', component: LeaveRequestComponent },
 
       // Volunteers
       { path: 'volunteers/hub', component: VolunteerHubComponent },
 
-      // Default redirect
+      // ❌ Future features – uncomment when ready
+      // { path: 'volunteers/hour-log', component: VolunteerHourLogComponent },
+      // { path: 'crm', component: CrmDashboardComponent },
+      // { path: 'super/stats', component: RealTimeStatsComponent },
+      // { path: 'super/modules', component: ModuleConfigComponent },
+
+      // Default
       { path: '', redirectTo: 'super', pathMatch: 'full' }
     ]
   },
-
-  // Default route
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-
-  // Wildcard (404 fallback)
   { path: '**', redirectTo: '/login' }
 ];
