@@ -9,7 +9,6 @@ export class ApiService {
   private http = inject(HttpClient);
   private baseUrl = 'http://localhost:8000/api/';
 
-  // ✅ Get CSRF token from cookies
   private getCsrfToken(): string | null {
     const name = 'csrftoken=';
     const decodedCookie = decodeURIComponent(document.cookie);
@@ -35,7 +34,7 @@ export class ApiService {
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'X-CSRFToken': csrfToken  // ✅ Must match cookie
+      'X-CSRFToken': csrfToken
     });
 
     return this.http.post(
@@ -47,7 +46,6 @@ export class ApiService {
     );
   }
 
-  // Generic methods
   get<T>(url: string): Observable<T> {
     const csrfToken = this.getCsrfToken();
     const headers = new HttpHeaders({

@@ -7,8 +7,7 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style":[ "scss",
-            "@angular/material/prebuilt-themes/deeppurple-amber.css"]          
+          "style":"scss"          
         }
       },
       "root": "",

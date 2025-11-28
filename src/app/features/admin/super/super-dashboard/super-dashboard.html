@@ -1,96 +1,123 @@
-<!-- Unique NGO Super Admin Dashboard -->
-<div class="dashboard-container">
+<!-- src/app/features/admin/super/super-dashboard/super-dashboard.html -->
+<div class="dashboard">
   <!-- Header -->
   <header class="dashboard-header">
     <div>
-      <h1 class="dashboard-title">nexoraX Command Center</h1>
-      <p class="subtitle">Manage your NGO operations in one place</p>
+      <h1>🌟 nexoraX Command Center</h1>
+      <p class="subtitle">Drive impact with real-time NGO insights</p>
     </div>
     <div class="header-actions">
-      <!-- Future: Quick actions, notifications -->
+      <button class="btn-primary" (click)="showAddUserModal()">
+        ➕ Add User
+      </button>
     </div>
   </header>
 
-  <!-- Module Grid -->
-  <div class="module-grid" (drop)="onDrop($event)" (dragover)="onDragOver($event)">
+  <!-- Stats Grid -->
+  <div class="stats-grid">
     <!-- HR Module -->
-    <div 
-      class="module-card" 
-      draggable="true"
-      (dragstart)="onDragStart($event, 'hr')"
-    >
+    <div class="module-card" (click)="navigateTo('hr')">
       <div class="module-header">
         <div class="module-icon hr-icon">👥</div>
         <h2 class="module-title">HR & Staff</h2>
       </div>
-      <p>Active staff members</p>
-      <div class="module-value">{{ stats.hr }}</div>
-      <div class="module-footer">
-        <span>Last updated just now</span>
-        <button class="view-btn" (click)="navigateTo('hr')">
-          View HR <span>→</span>
-        </button>
+      <div class="stats-row">
+        <div class="stat">
+          <div class="stat-value">{{ stats.hr }}</div>
+          <div class="stat-label">Active</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">{{ stats.leavePending }}</div>
+          <div class="stat-label">Pending Leave</div>
+        </div>
       </div>
     </div>
 
     <!-- Volunteers -->
-    <div 
-      class="module-card" 
-      draggable="true"
-      (dragstart)="onDragStart($event, 'volunteers')"
-    >
+    <div class="module-card" (click)="navigateTo('volunteers/hub')">
       <div class="module-header">
         <div class="module-icon volunteer-icon">🤝</div>
         <h2 class="module-title">Volunteers</h2>
       </div>
-      <p>Active volunteers</p>
-      <div class="module-value">{{ stats.volunteers }}</div>
-      <div class="module-footer">
-        <span>12 new this week</span>
-        <button class="view-btn" (click)="navigateTo('volunteers/hub')">
-          View Volunteers <span>→</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- Leave Requests -->
-    <div 
-      class="module-card" 
-      draggable="true"
-      (dragstart)="onDragStart($event, 'leave')"
-    >
-      <div class="module-header">
-        <div class="module-icon leave-icon">📝</div>
-        <h2 class="module-title">Leave Requests</h2>
-      </div>
-      <p>Pending approvals</p>
-      <div class="module-value">{{ stats.leavePending }}</div>
-      <div class="module-footer">
-        <span>Next deadline: tomorrow</span>
-        <button class="view-btn" (click)="navigateTo('leave')">
-          View Leave <span>→</span>
-        </button>
+      <div class="stats-row">
+        <div class="stat">
+          <div class="stat-value">{{ stats.volunteers }}</div>
+          <div class="stat-label">Active</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">{{ stats.hoursLogged }}</div>
+          <div class="stat-label">Hours This Week</div>
+        </div>
       </div>
     </div>
 
     <!-- CRM -->
-    <div 
-      class="module-card" 
-      draggable="true"
-      (dragstart)="onDragStart($event, 'crm')"
-    >
+    <div class="module-card" (click)="navigateTo('crm')">
       <div class="module-header">
         <div class="module-icon crm-icon">📞</div>
         <h2 class="module-title">CRM</h2>
       </div>
-      <p>Donors & beneficiaries</p>
-      <div class="module-value">{{ stats.crmContacts }}</div>
-      <div class="module-footer">
-        <span>24 new this month</span>
-        <button class="view-btn" (click)="navigateTo('crm')">
-          View CRM <span>→</span>
-        </button>
+      <div class="stats-row">
+        <div class="stat">
+          <div class="stat-value">{{ stats.donors }}</div>
+          <div class="stat-label">Donors</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">{{ stats.beneficiaries }}</div>
+          <div class="stat-label">Beneficiaries</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Impact -->
+    <div class="module-card impact-card">
+      <div class="module-header">
+        <div class="module-icon impact-icon">🚀</div>
+        <h2 class="module-title">Impact</h2>
+      </div>
+      <div class="impact-timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div>
+            <strong>42 Staff</strong> trained
+            <div class="timeline-date">Nov 2025</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div>
+            <strong>$12K</strong> grant received
+            <div class="timeline-date">Oct 2025</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+
+  <!-- Unique Features Section -->
+  <section class="unique-features">
+    <h2>NGO-Specific Tools</h2>
+    <div class="features-grid">
+      <div class="feature-card" (click)="navigateTo('volunteers/skill-matrix')">
+        <div class="feature-icon">🧩</div>
+        <h3>Volunteer Skill Matrix</h3>
+        <p>Match volunteers to projects by skills</p>
+      </div>
+      <div class="feature-card" (click)="navigateTo('hr/leave-balance')">
+        <div class="feature-icon">📅</div>
+        <h3>Leave Balance Tracker</h3>
+        <p>Real-time leave tracking with alerts</p>
+      </div>
+      <div class="feature-card" (click)="navigateTo('crm/donor-heatmap')">
+        <div class="feature-icon">🗺️</div>
+        <h3>Donor Heatmap</h3>
+        <p>Visualize donor locations & giving</p>
+      </div>
+      <div class="feature-card" (click)="navigateTo('field/offline-forms')">
+        <div class="feature-icon">📱</div>
+        <h3>Offline Field Forms</h3>
+        <p>Collect data without internet</p>
+      </div>
+    </div>
+  </section>
 </div>

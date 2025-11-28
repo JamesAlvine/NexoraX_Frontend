@@ -1,0 +1,29 @@
+<div class="leave-form-container">
+  <h1>Submit Leave Request</h1>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="leave-form">
+    <div class="form-group">
+      <label>Staff Email *</label>
+      <input formControlName="staff_email" type="email" placeholder="staff@ngo.org" />
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Start Date *</label>
+        <input formControlName="start_date" type="date" />
+      </div>
+      <div class="form-group">
+        <label>End Date *</label>
+        <input formControlName="end_date" type="date" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Reason *</label>
+      <textarea formControlName="reason" placeholder="Reason for leave..."></textarea>
+    </div>
+    <button type="submit" [disabled]="isLoading" class="btn-primary">
+      {{ isLoading ? 'Submitting...' : 'Submit Leave Request' }}
+    </button>
+    @if (message) {
+      <div class="alert">{{ message }}</div>
+    }
+  </form>
+</div>

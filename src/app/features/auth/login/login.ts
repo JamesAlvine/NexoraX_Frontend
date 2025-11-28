@@ -1,5 +1,5 @@
 // src/app/features/auth/login/login.ts
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core'; // ✅ ADDED IMPORT
+import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from '../../../core/services/api.service';
@@ -10,8 +10,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './login.html',
-  styleUrl: './login.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush // ✅ NOW RECOGNIZED
+  styleUrls: ['./login.scss']
 })
 export class Login {
   private fb = inject(FormBuilder);
@@ -27,6 +26,12 @@ export class Login {
   errorMessage = '';
 
   constructor() {
+    // Clear old cookies to prevent CSRF mismatches
+    document.cookie.split(";").forEach(cookie => {
+      const eqPos = cookie.indexOf("=");
+      const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+      document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+    });
     this.api.ensureCsrf().subscribe();
   }
 

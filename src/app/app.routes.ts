@@ -1,8 +1,4 @@
-// #4: Application Routes (TypeScript)
-// Purpose: Define all routes for the NGO platform
-// Structure: Login → Admin Layout (with sub-routes)
-// Features: Role-based paths (Super Admin, HR, Volunteers)
-
+// src/app/app.routes.ts
 import { Routes } from '@angular/router';
 
 // Auth
@@ -15,19 +11,19 @@ import { AdminLayout } from './features/admin/admin-layout/admin-layout';
 import { SuperDashboard } from './features/admin/super/super-dashboard/super-dashboard';
 import { OrganizationComponent } from './features/admin/super/organization/organization';
 import { UserAssignmentComponent } from './features/admin/super/user-assignment/user-assignment';
+import { UserCreateComponent } from './features/admin/super/user-create/user-create';
 
-// HR Module
+// HR
 import { HrList } from './features/hr/hr-list/hr-list';
 import { LeaveRequestComponent } from './features/hr/leave-request/leave-request';
 
-// Volunteers Module
+// Volunteers
 import { VolunteerHubComponent } from './features/volunteers/volunteer-hub/volunteer-hub';
+import { VolunteerHourLogComponent } from './features/volunteers/volunteer-hour-log/volunteer-hour-log';
+import { SkillMatrixComponent } from './features/volunteers/skill-matrix/skill-matrix';
 
-// ❌ Temporarily comment out future components (not created yet)
-// import { VolunteerHourLogComponent } from './features/volunteers/volunteer-hour-log/volunteer-hour-log';
-// import { CrmDashboardComponent } from './features/crm/crm-dashboard/crm-dashboard';
-// import { RealTimeStatsComponent } from './features/admin/super/real-time-stats/real-time-stats';
-// import { ModuleConfigComponent } from './features/admin/super/module-config/module-config';
+// CRM
+import { CrmDashboardComponent } from './features/crm/crm-dashboard/crm-dashboard';
 
 export const routes: Routes = [
   { path: 'login', component: Login },
@@ -39,19 +35,19 @@ export const routes: Routes = [
       { path: 'super', component: SuperDashboard },
       { path: 'super/organization', component: OrganizationComponent },
       { path: 'super/users', component: UserAssignmentComponent },
+      { path: 'super/users/new', component: UserCreateComponent },
 
-      // HR & Staff
+      // HR
       { path: 'hr', component: HrList },
       { path: 'hr/leave', component: LeaveRequestComponent },
 
       // Volunteers
       { path: 'volunteers/hub', component: VolunteerHubComponent },
+      { path: 'volunteers/hour-log', component: VolunteerHourLogComponent },
+      { path: 'volunteers/skill-matrix', component: SkillMatrixComponent },
 
-      // ❌ Future features – uncomment when ready
-      // { path: 'volunteers/hour-log', component: VolunteerHourLogComponent },
-      // { path: 'crm', component: CrmDashboardComponent },
-      // { path: 'super/stats', component: RealTimeStatsComponent },
-      // { path: 'super/modules', component: ModuleConfigComponent },
+      // CRM
+      { path: 'crm', component: CrmDashboardComponent },
 
       // Default
       { path: '', redirectTo: 'super', pathMatch: 'full' }

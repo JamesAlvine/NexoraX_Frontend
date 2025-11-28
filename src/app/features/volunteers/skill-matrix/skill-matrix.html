@@ -1,0 +1,47 @@
+<!-- skill-matrix.html -->
+<div class="matrix-container">
+  <h1>Volunteer Skill Matrix</h1>
+  
+  @if (isLoading) {
+    <div class="loading">Loading skill matrix...</div>
+  } @else {
+    <div class="matrix-table">
+      <div class="table-header">
+        <div class="header-cell">Volunteer</div>
+        <div class="header-cell">Skills</div>
+        <div class="header-cell">Experience</div>
+        
+        <!-- Department columns -->
+        @for (dept of departments; track dept) {
+          <div class="header-cell">{{ dept }}</div>
+        }
+        <div class="header-cell">Best Fit</div>
+      </div>
+
+      <!-- Volunteer rows -->
+      @for (vol of matrix; track vol.email) {
+        <div class="table-row">
+          <div class="cell">{{ vol.email }}</div>
+          <div class="cell">
+            <span class="skill-tag" *ngFor="let skill of vol.skills">{{ skill }}</span>
+          </div>
+          <div class="cell">{{ vol.experience_years }} years</div>
+          
+          <!-- Scores per department -->
+          @for (dept of departments; track dept) {
+            <div class="cell">
+              <div 
+                class="score-badge" 
+                [style.backgroundColor]="getScoreColor(vol.scores[dept])">
+                {{ vol.scores[dept] }}%
+              </div>
+            </div>
+          }
+          <div class="cell">
+            <strong>{{ vol.best_fit }}</strong>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>
