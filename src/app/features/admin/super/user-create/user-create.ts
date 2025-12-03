@@ -1,36 +1,39 @@
-// user-create.ts
+// src/app/features/admin/super/user-create/user-create.ts
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiService } from '../../../../core/services/api.service';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-user-create',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './user-create.html',
   styleUrls: ['./user-create.scss']
 })
 export class UserCreateComponent {
   private fb = inject(FormBuilder);
   private api = inject(ApiService);
+  private router = inject(Router);
 
-  // ✅ Correctly typed form
   form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(8)]],
-    is_super_admin: [false],
+    is_super_admin: [false]
   });
 
   apps = ['HR', 'Volunteers', 'CRM', 'Leave'];
   selectedApps: string[] = [];
   message = '';
+  errorMessage = '';
   isLoading = false;
 
   onSubmit() {
     if (this.form.invalid) return;
     this.isLoading = true;
     this.message = '';
+    this.errorMessage = '';
 
     const { email, password, is_super_admin } = this.form.getRawValue();
 
@@ -44,10 +47,13 @@ export class UserCreateComponent {
         this.message = '✅ User created successfully';
         this.form.reset({ email: '', password: '', is_super_admin: false });
         this.selectedApps = [];
-        this.isLoading = false;
+        setTimeout(() => {
+          this.router.navigate(['/admin/super/users']);
+        }, 2000);
       },
-      error: (err) => {
-        this.message = err?.error?.error || 'Failed to create user';
+      error: (error) => {
+        console.error('User creation failed:', error);
+        this.errorMessage = error?.error?.error || 'Failed to create user. Please try again.';
         this.isLoading = false;
       }
     });
@@ -64,5 +70,9 @@ export class UserCreateComponent {
 
   isAppSelected(app: string): boolean {
     return this.selectedApps.includes(app);
+  }
+
+  cancel() {
+    this.router.navigate(['/admin/super/users']);
   }
 }

@@ -1,0 +1,17 @@
+<div class="form-container">
+  <h2>Field Data Collection</h2>
+  <form [formGroup]="form">
+    <input formControlName="location" placeholder="Village / Location" />
+    <input formControlName="beneficiaries" type="number" placeholder="Number of people served" />
+    <select formControlName="activity">
+      <option value="health">Health Camp</option>
+      <option value="education">Education Drive</option>
+      <option value="relief">Relief Distribution</option>
+    </select>
+    <label>
+      <input type="checkbox" formControlName="requiresInternet" />
+      Requires Internet
+    </label>
+    <button (click)="saveForm()">Save</button>
+  </form>
+</div>

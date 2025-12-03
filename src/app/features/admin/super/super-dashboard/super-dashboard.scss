@@ -1,18 +1,14 @@
 /* src/app/features/admin/super/super-dashboard/super-dashboard.scss */
 .dashboard {
   padding: 2rem;
+  background: #f8fafc;
 }
 
-.dashboard-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+.header {
   margin-bottom: 2rem;
-  flex-wrap: wrap;
-  gap: 1rem;
 }
 
-.dashboard-header h1 {
+.header h1 {
   font-size: 2rem;
   font-weight: 800;
   background: linear-gradient(90deg, #4f46e5, #7c3aed);
@@ -21,174 +17,94 @@
   background-clip: text;
 }
 
-.subtitle {
+.header p {
   color: #64748b;
-  font-size: 1rem;
-  margin-top: 0.25rem;
-}
-
-.btn-primary {
-  background: #4f46e5;
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  font-size: 1.1rem;
 }
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1.5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
 }
 
-.module-card {
+.stat-card {
   background: white;
   border-radius: 16px;
   padding: 1.5rem;
+  display: flex;
+  align-items: center;
   box-shadow: 0 4px 12px rgba(0,0,0,0.06);
   transition: transform 0.2s, box-shadow 0.2s;
-  cursor: pointer;
 }
 
-.module-card:hover {
+.stat-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 6px 16px rgba(0,0,0,0.12);
 }
 
-.module-header {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.25rem;
-}
-
-.module-icon {
-  width: 2.25rem;
-  height: 2.25rem;
+.stat-icon {
+  width: 48px;
+  height: 48px;
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.25rem;
-  color: white;
-}
-
-.hr-icon { background: linear-gradient(135deg, #3b82f6, #2563eb); }
-.volunteer-icon { background: linear-gradient(135deg, #10b981, #059669); }
-.crm-icon { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
-.impact-icon { background: linear-gradient(135deg, #f59e0b, #d97706); }
-
-.module-title {
-  font-weight: 700;
-  font-size: 1.125rem;
-  color: #1e293b;
-}
-
-.stats-row {
-  display: flex;
-  gap: 1.5rem;
-  margin-top: 1rem;
-}
-
-.stat {
-  flex: 1;
-}
-
-.stat-value {
   font-size: 1.5rem;
+  margin-right: 1rem;
+}
+
+.primary .stat-icon { background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; }
+.success .stat-icon { background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; }
+.info .stat-icon { background: linear-gradient(135deg, #10b981, #059669); color: white; }
+.warning .stat-icon { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; }
+
+.stat-content h3 {
+  font-size: 1.75rem;
   font-weight: 800;
   color: #1e293b;
+  margin: 0;
 }
 
-.stat-label {
+.stat-content p {
   color: #64748b;
-  font-size: 0.875rem;
+  margin: 0.25rem 0 0;
 }
 
-.impact-timeline {
-  margin-top: 1rem;
-}
-
-.timeline-item {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 1rem;
-  align-items: flex-start;
-}
-
-.timeline-dot {
-  width: 12px;
-  height: 12px;
-  background: #4f46e5;
-  border-radius: 50%;
-  margin-top: 6px;
-}
-
-.timeline-date {
-  font-size: 0.75rem;
-  color: #94a3b8;
-  margin-top: 0.25rem;
-}
-
-.unique-features {
-  margin-top: 3rem;
-}
-
-.unique-features h2 {
+.quick-actions h2 {
   font-size: 1.5rem;
   margin-bottom: 1.5rem;
   color: #1e293b;
 }
 
-.features-grid {
+.actions-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1.5rem;
 }
 
-.feature-card {
+.action-card {
   background: white;
   border-radius: 16px;
   padding: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  text-align: center;
   cursor: pointer;
   transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
-.feature-card:hover {
+.action-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-.feature-icon {
+.action-icon {
   font-size: 2rem;
   margin-bottom: 1rem;
 }
 
-.feature-card h3 {
+.action-card h3 {
   font-size: 1.125rem;
-  margin-bottom: 0.5rem;
   color: #1e293b;
-}
-
-.feature-card p {
-  color: #64748b;
-  font-size: 0.9rem;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .dashboard-header {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .stats-grid {
-    grid-template-columns: 1fr;
-  }
 }

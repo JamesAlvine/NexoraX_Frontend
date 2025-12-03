@@ -1,18 +1,51 @@
 <!-- src/app/features/auth/login/login.html -->
-<div class="login-wrapper">
+<div class="login-container">
   <div class="login-card">
-    <div class="logo">nexoraX</div>
-    <h2>NGO Management Suite</h2>
+    <!-- Logo -->
+    <img src="/logo.jpeg" alt="Nèos Sirius" class="logo" />
+
+    <h2 class="title">Sign in to your account</h2>
+
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="login-form">
-      <input formControlName="email" type="email" placeholder="Email" autocomplete="email" />
-      <input formControlName="password" type="password" placeholder="Password" autocomplete="current-password" />
-      <button type="submit" [disabled]="isLoading" class="btn btn-primary">
+      <!-- Email Field -->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input id="email" formControlName="email" type="email" placeholder="Enter your email" />
+        @if (form.controls.email.invalid && form.controls.email.touched) {
+          <div class="error-message">Valid email is required</div>
+        }
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input id="password" formControlName="password" type="password" placeholder="Enter your password" />
+        @if (form.controls.password.invalid && form.controls.password.touched) {
+          <div class="error-message">Minimum 8 characters</div>
+        }
+      </div>
+
+      <!-- Forgot Password Link -->
+      <a href="#" class="forgot-password">Forgot password?</a>
+
+      <!-- Sign In Button -->
+      <button 
+        type="submit" 
+        [disabled]="isLoading || form.invalid" 
+        class="btn"
+      >
         {{ isLoading ? 'Signing in...' : 'Sign In' }}
       </button>
+
+      <!-- Error Message -->
       @if (errorMessage) {
-        <div class="error-message">{{ errorMessage }}</div>
+        <div class="error-alert">{{ errorMessage }}</div>
       }
     </form>
-    <p class="footer">© 2025 Neos NGO. All rights reserved.</p>
+
+    <!-- Footer -->
+    <footer class="login-footer">
+      © 2025 - Nèos Sirius
+    </footer>
   </div>
 </div>

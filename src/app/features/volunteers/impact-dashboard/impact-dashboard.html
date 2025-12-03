@@ -1,0 +1,9 @@
+<div class="impact-container">
+  <h1>Volunteer Impact Dashboard</h1>
+  <p *ngIf="isLoading">Loading impact data...</p>
+  <div *ngIf="!isLoading">
+    <p>Volunteers: {{ data.volunteers }}</p>
+    <p>Hours Logged: {{ data.hoursLogged }}</p>
+    <app-impact-map></app-impact-map>
+  </div>
+</div>

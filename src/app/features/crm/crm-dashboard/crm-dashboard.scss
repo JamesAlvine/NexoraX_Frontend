@@ -1,0 +1,79 @@
+// src/app/features/crm/crm-dashboard/crm-dashboard.scss
+.crm-container {
+  padding: 2rem;
+}
+
+h1 {
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  color: var(--mat-sys-on-surface);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.stat-card {
+  background: var(--mat-sys-surface-container);
+  border-radius: 12px;
+  box-shadow: var(--mat-sys-elevation-level2);
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--mat-sys-elevation-level3);
+  }
+
+  .stat-icon {
+    font-size: 2.5rem;
+    color: var(--mat-sys-primary);
+    margin-right: 1rem;
+  }
+
+  .stat-content {
+    flex: 1;
+  }
+
+  .stat-label {
+    color: var(--mat-sys-on-surface-variant);
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+  }
+
+  .stat-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--mat-sys-primary);
+    margin-top: 0.25rem;
+  }
+
+  .stat-subtitle {
+    font-size: 0.75rem;
+    color: var(--mat-sys-on-surface-variant);
+    margin-top: 0.25rem;
+  }
+}
+
+// Dark Mode Overrides
+.dark-mode {
+  .stat-card {
+    background: #1e293b;
+    color: #e2e8f0;
+
+    .stat-icon {
+      color: #22d3ee;
+    }
+
+    .stat-label,
+    .stat-subtitle {
+      color: #94a3b8;
+    }
+
+    .stat-value {
+      color: #22d3ee;
+    }
+}
+}

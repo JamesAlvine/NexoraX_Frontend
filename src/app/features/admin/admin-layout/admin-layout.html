@@ -1,112 +1,140 @@
-<!-- src/app/features/admin/admin-layout/admin-layout.html -->
-<div class="admin-layout" [class.sidebar-collapsed]="!isSidebarOpen()">
+<mat-sidenav-container class="sidenav-container" hasBackdrop="false">
   <!-- Sidebar -->
-  <aside class="sidebar">
+  <mat-sidenav
+    #sidenav
+    [mode]="isMobile ? 'over' : 'side'"
+    [opened]="!isMobile"
+    class="sidenav"
+    fixedInViewport="true"
+    fixedTopGap="64">
+    
     <div class="sidebar-header">
-      <div class="logo">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M12 2L2 7l10 5 10-5V2z"></path>
-          <path d="M2 12h20v8H2v-8z"></path>
-        </svg>
-        <span class="logo-text" *ngIf="isSidebarOpen()">nexoraX</span>
-      </div>
-      <button class="toggle-btn" (click)="toggleSidebar()" aria-label="Toggle sidebar">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M15 18l-6-6 6-6"></path>
-        </svg>
-      </button>
+      <img src="/logo.jpeg" alt="Nèos Sirius" class="logo" />
+      <span class="logo-text" *ngIf="!isMobile">Nèos Sirius</span>
     </div>
-    <nav class="nav-menu">
-      <ul class="nav-items">
-        <!-- Super Admin -->
-        <li class="nav-section" *ngIf="isSidebarOpen()">Super Admin</li>
-        <li class="nav-item" (click)="navigateTo('super')">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-            <line x1="3" y1="9" x2="21" y2="9"></line>
-            <line x1="9" y1="21" x2="9" y2="9"></line>
-          </svg>
-          <span *ngIf="isSidebarOpen()">Dashboard</span>
-        </li>
-        <li class="nav-item" (click)="navigateTo('super/organization')">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 2L2 7l10 5 10-5V2z"></path>
-            <path d="M2 12h20v8H2v-8z"></path>
-          </svg>
-          <span *ngIf="isSidebarOpen()">Organization</span>
-        </li>
-        <li class="nav-item" (click)="navigateTo('super/users')">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M16 21v-2a4 4 0 00-5-5H6a4 4 0 00-5 5v2"></path>
-            <circle cx="12" cy="7" r="4"></circle>
-          </svg>
-          <span *ngIf="isSidebarOpen()">User Assignment</span>
-        </li>
 
-        <!-- HR -->
-        <li class="nav-section" *ngIf="isSidebarOpen()">HR & Staff</li>
-        <li class="nav-item" (click)="navigateTo('hr')">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M17 21v-2a4 4 0 00-5-5H6a4 4 0 00-5 5v2"></path>
-            <circle cx="12" cy="7" r="4"></circle>
-          </svg>
-          <span *ngIf="isSidebarOpen()">Staff Directory</span>
-        </li>
-        <li class="nav-item" (click)="navigateTo('hr/leave')">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-            <line x1="16" y1="2" x2="16" y2="6"></line>
-            <line x1="8" y1="2" x2="8" y2="6"></line>
-            <line x1="3" y1="10" x2="21" y2="10"></line>
-          </svg>
-          <span *ngIf="isSidebarOpen()">Leave Requests</span>
-        </li>
+    <mat-nav-list>
+      <!-- Super Admin -->
+      <h3 matSubheader *ngIf="!isMobile">Super Admin</h3>
+      <a mat-list-item (click)="navigateTo('super')">
+        <mat-icon>dashboard</mat-icon>
+        <span>Dashboard</span>
+      </a>
 
-        <!-- Volunteers -->
-        <li class="nav-section" *ngIf="isSidebarOpen()">Volunteers</li>
-        <li class="nav-item" (click)="navigateTo('volunteers/hub')">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M17 21v-2a4 4 0 00-5-5H6a4 4 0 00-5 5v2"></path>
-            <circle cx="12" cy="7" r="4"></circle>
-          </svg>
-          <span *ngIf="isSidebarOpen()">Volunteer Hub</span>
-        </li>
-        <li class="nav-item" (click)="navigateTo('volunteers/hour-log')">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"></circle>
-            <polyline points="12 6 12 12 16 14"></polyline>
-          </svg>
-          <span *ngIf="isSidebarOpen()">Hour Log</span>
-        </li>
+      <!-- HR -->
+      <h3 matSubheader *ngIf="!isMobile">HR & Staff</h3>
+      <a mat-list-item (click)="navigateTo('hr')">
+        <mat-icon>people</mat-icon>
+        <span>Staff Directory</span>
+      </a>
+      <a mat-list-item (click)="navigateTo('hr/leave')">
+        <mat-icon>event</mat-icon>
+        <span>Leave Requests</span>
+      </a>
 
-        <!-- CRM -->
-        <li class="nav-section" *ngIf="isSidebarOpen()">CRM</li>
-        <li class="nav-item" (click)="navigateTo('crm')">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M16 4v4a1 1 0 01-1 1H9a1 1 0 01-1-1V4"></path>
-            <path d="M8 12v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4"></path>
-            <path d="M16 12v4a1 1 0 01-1 1h-2a1 1 0 01-1-1v-4"></path>
-            <path d="M21 8V7a2 2 0 00-2-2H5a2 2 0 00-2 2v1"></path>
-            <path d="M21 4v.5"></path>
-          </svg>
-          <span *ngIf="isSidebarOpen()">Donors & Beneficiaries</span>
-        </li>
-      </ul>
-    </nav>
-  </aside>
+      <!-- Volunteers -->
+      <h3 matSubheader *ngIf="!isMobile">Volunteers</h3>
+      <a mat-list-item (click)="navigateTo('volunteers/hub')">
+        <mat-icon>group</mat-icon>
+        <span>Volunteer Hub</span>
+      </a>
+      <a mat-list-item (click)="navigateTo('volunteers/skill-matrix')">
+        <mat-icon>psychology</mat-icon>
+        <span>Skill Matrix</span>
+      </a>
+      <a mat-list-item (click)="navigateTo('volunteers/impact')">
+        <mat-icon>show_chart</mat-icon>
+        <span>Impact Dashboard</span>
+      </a>
+
+      <!-- CRM -->
+      <h3 matSubheader *ngIf="!isMobile">CRM</h3>
+      <a mat-list-item (click)="navigateTo('crm')">
+        <mat-icon>contacts</mat-icon>
+        <span>Donors & Beneficiaries</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
 
   <!-- Main Content -->
-  <main class="main-content">
-    <header class="topbar">
-      <div class="topbar-left">
-        <h1>Super Admin Dashboard</h1>
+  <mat-sidenav-content>
+    <!-- Header -->
+    <mat-toolbar color="primary" class="top-toolbar">
+      <button mat-icon-button (click)="sidenav.toggle()" *ngIf="isMobile" class="menu-toggle">
+        <mat-icon>menu</mat-icon>
+      </button>
+
+      <div class="toolbar-brand" *ngIf="!isMobile">
+        <img src="/logo.jpeg" alt="Nèos Sirius" class="toolbar-logo" />
+        <span class="toolbar-title">Nèos Sirius Admin</span>
       </div>
-      <div class="topbar-right">
-        <button class="icon-btn" (click)="logout()" title="Logout">
-          <span>🚪</span>
+
+      <!-- Search Field (NO floatLabel) -->
+      <mat-form-field class="search-field">
+        <mat-icon matPrefix>search</mat-icon>
+        <input 
+          matInput 
+          placeholder="Search..." 
+          [(ngModel)]="searchQuery"
+          (keyup.enter)="onSearch()"
+        />
+      </mat-form-field>
+
+      <div class="spacer"></div>
+
+      <!-- Dark Mode Toggle -->
+      <button mat-icon-button (click)="toggleDarkMode()" class="toolbar-icon">
+        <mat-icon>{{ isDarkMode ? 'light_mode' : 'dark_mode' }}</mat-icon>
+      </button>
+
+      <!-- Notifications -->
+      <button 
+        mat-icon-button 
+        [matBadge]="unreadCount" 
+        matBadgeColor="warn"
+        [matMenuTriggerFor]="notificationMenu"
+        class="toolbar-icon">
+        <mat-icon>notifications</mat-icon>
+      </button>
+      <mat-menu #notificationMenu="matMenu">
+        <button mat-menu-item (click)="markAllAsRead()">
+          <mat-icon>done_all</mat-icon>
+          <span>Mark all as read</span>
         </button>
-      </div>
-    </header>
-    <router-outlet></router-outlet>
-  </main>
-</div>
+        <mat-divider></mat-divider>
+        <button mat-menu-item>
+          <mat-icon>event</mat-icon>
+          <span>New leave request</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>person_add</mat-icon>
+          <span>New volunteer joined</span>
+        </button>
+      </mat-menu>
+
+      <!-- User Menu -->
+      <button mat-icon-button [matMenuTriggerFor]="userMenu" class="toolbar-icon">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+      <mat-menu #userMenu="matMenu">
+        <button mat-menu-item [disabled]="true">
+          <mat-icon>email</mat-icon>
+          <span>{{ currentUser?.email }}</span>
+        </button>
+        <button mat-menu-item (click)="navigateTo('super/organization')">
+          <mat-icon>settings</mat-icon>
+          <span>Organization</span>
+        </button>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    </mat-toolbar>
+
+    <!-- Page Content -->
+    <div class="main-content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

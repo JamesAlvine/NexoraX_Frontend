@@ -1,0 +1,48 @@
+<!-- src/app/features/crm/crm-dashboard/crm-dashboard.html -->
+<div class="crm-container">
+  <h1>CRM Dashboard</h1>
+
+  <div class="stats-grid">
+    <!-- Donors -->
+    <mat-card class="stat-card" [ngClass]="{ 'dark-mode': isDarkMode }">
+      <mat-card-content>
+        <div class="stat-icon">
+          <mat-icon>favorite</mat-icon>
+        </div>
+        <div class="stat-content">
+          <div class="stat-label">Donors</div>
+          <div class="stat-value">{{ stats.donors }}</div>
+          <div class="stat-subtitle">Community Support</div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Beneficiaries -->
+    <mat-card class="stat-card" [ngClass]="{ 'dark-mode': isDarkMode }">
+      <mat-card-content>
+        <div class="stat-icon">
+          <mat-icon>groups</mat-icon>
+        </div>
+        <div class="stat-content">
+          <div class="stat-label">Beneficiaries</div>
+          <div class="stat-value">{{ stats.beneficiaries }}</div>
+          <div class="stat-subtitle">Active this month</div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Interactions -->
+    <mat-card class="stat-card" [ngClass]="{ 'dark-mode': isDarkMode }">
+      <mat-card-content>
+        <div class="stat-icon">
+          <mat-icon>edit_note</mat-icon>
+        </div>
+        <div class="stat-content">
+          <div class="stat-label">Interactions</div>
+          <div class="stat-value">{{ stats.interactions }}</div>
+          <div class="stat-subtitle">Total logged</div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

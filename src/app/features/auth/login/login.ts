@@ -1,5 +1,5 @@
 // src/app/features/auth/login/login.ts
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from '../../../core/services/api.service';
@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './login.html',
   styleUrls: ['./login.scss']
 })
-export class Login {
+export class Login implements OnInit {
   private fb = inject(FormBuilder);
   private api = inject(ApiService);
   private router = inject(Router);
@@ -25,32 +25,43 @@ export class Login {
   isLoading = false;
   errorMessage = '';
 
-  constructor() {
-    // Clear old cookies to prevent CSRF mismatches
-    document.cookie.split(";").forEach(cookie => {
-      const eqPos = cookie.indexOf("=");
-      const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-      document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+  ngOnInit() {
+    // Clear stale session data
+    localStorage.removeItem('user');
+    sessionStorage.clear();
+
+    // Fetch CSRF token before login
+    this.api.ensureCsrf().subscribe({
+      next: () => {},
+      error: (err) => {
+        console.warn('CSRF fetch failed:', err);
+        this.errorMessage = 'Security token missing. Please refresh the page.';
+      }
     });
-    this.api.ensureCsrf().subscribe();
   }
 
   onSubmit() {
     if (this.form.invalid) return;
+
     this.isLoading = true;
     this.errorMessage = '';
 
     const { email, password } = this.form.getRawValue();
+
     this.api.login(email, password).subscribe({
       next: (user) => {
+        localStorage.setItem('user', JSON.stringify(user));
         if (user.is_super_admin) {
           this.router.navigate(['/admin/super']);
         } else {
           this.router.navigate(['/user/dashboard']);
         }
       },
-      error: () => {
-        this.errorMessage = 'Invalid email or password.';
+      error: (err) => {
+        console.error('Login failed:', err);
+        this.errorMessage = typeof err === 'string' 
+          ? err 
+          : 'Invalid email or password. Please try again.';
         this.isLoading = false;
       }
     });

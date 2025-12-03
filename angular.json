@@ -7,7 +7,13 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style":"scss"          
+          "style": [
+              "node_modules/@cds/core/styles/module.reset.min.css",
+              "node_modules/@cds/core/styles/module.tokens.min.css",
+              "node_modules/@cds/core/styles/module.typography.min.css",
+              "node_modules/@cds/core/styles/module.layout.min.css",
+              "src/styles.scss"
+            ]         
         }
       },
       "root": "",

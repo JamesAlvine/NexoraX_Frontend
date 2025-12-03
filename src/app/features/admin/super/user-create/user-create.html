@@ -1,39 +1,60 @@
-<!-- user-create.html -->
-<div class="create-user-container">
-  <h1>Add New User</h1>
-  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="user-form">
+<!-- src/app/features/admin/super/user-create/user-create.html -->
+<div class="user-create-container">
+  <h1>Create New User</h1>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="create-form">
     <div class="form-group">
-      <label>Email *</label>
-      <input formControlName="email" type="email" placeholder="user@ngo.org" />
-    </div>
-    <div class="form-group">
-      <label>Password *</label>
-      <input formControlName="password" type="password" placeholder="Minimum 8 characters" />
-    </div>
-    <div class="form-group checkbox-group">
-      <label>
-        <input type="checkbox" formControlName="is_super_admin" />
-        Super Admin
-      </label>
-    </div>
-    <div class="form-group">
-      <label>Assign to Modules:</label>
-      @for (app of apps; track app) {
-        <label class="app-checkbox">
-          <input
-            type="checkbox"
-            [checked]="isAppSelected(app)"
-            (change)="toggleApp(app, $event)"
-          />
-          {{ app }}
-        </label>
+      <label for="email">Email</label>
+      <input id="email" formControlName="email" type="email" placeholder="user@ngo.org" />
+      @if (form.controls.email.invalid && form.controls.email.touched) {
+        <div class="error-message">Email is required and must be valid</div>
       }
     </div>
-    <button type="submit" [disabled]="isLoading" class="btn-primary">
-      {{ isLoading ? 'Creating...' : 'Create User' }}
-    </button>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input id="password" formControlName="password" type="password" placeholder="••••••••" />
+      @if (form.controls.password.invalid && form.controls.password.touched) {
+        <div class="error-message">Password must be at least 8 characters</div>
+      }
+    </div>
+
+    <div class="form-group">
+      <label>Assign Apps</label>
+      <div class="app-checkboxes">
+        @for (app of apps; track app) {
+          <label class="app-checkbox">
+            <input type="checkbox" (change)="toggleApp(app, $event)" />
+            {{ app }}
+          </label>
+        }
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Role</label>
+      <div class="role-radio">
+        <label>
+          <input type="radio" value="regular" formControlName="role" />
+          Regular User
+        </label>
+        <label>
+          <input type="radio" value="super_admin" formControlName="role" />
+          Super Admin
+        </label>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" [disabled]="isLoading" class="btn btn-primary">
+        {{ isLoading ? 'Creating...' : 'Create User' }}
+      </button>
+      <button type="button" (click)="cancel()" class="btn btn-secondary">Cancel</button>
+    </div>
+
     @if (message) {
-      <div class="alert">{{ message }}</div>
+      <div class="message" [class.message-success]="!errorMessage" [class.message-error]="errorMessage">
+        {{ message }}
+      </div>
     }
   </form>
 </div>

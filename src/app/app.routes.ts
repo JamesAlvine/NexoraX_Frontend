@@ -21,6 +21,7 @@ import { LeaveRequestComponent } from './features/hr/leave-request/leave-request
 import { VolunteerHubComponent } from './features/volunteers/volunteer-hub/volunteer-hub';
 import { VolunteerHourLogComponent } from './features/volunteers/volunteer-hour-log/volunteer-hour-log';
 import { SkillMatrixComponent } from './features/volunteers/skill-matrix/skill-matrix';
+import { ImpactDashboardComponent } from './features/volunteers/impact-dashboard/impact-dashboard';
 
 // CRM
 import { CrmDashboardComponent } from './features/crm/crm-dashboard/crm-dashboard';
@@ -45,6 +46,7 @@ export const routes: Routes = [
       { path: 'volunteers/hub', component: VolunteerHubComponent },
       { path: 'volunteers/hour-log', component: VolunteerHourLogComponent },
       { path: 'volunteers/skill-matrix', component: SkillMatrixComponent },
+      { path: 'volunteers/impact', component: ImpactDashboardComponent }, // ✅ NEW
 
       // CRM
       { path: 'crm', component: CrmDashboardComponent },
