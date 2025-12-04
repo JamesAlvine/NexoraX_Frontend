@@ -1,0 +1,37 @@
+<!-- src/app/features/admin/super/user-list/user-list.html -->
+<div class="user-management">
+  <div class="page-header">
+    <h1>User Management</h1>
+    <button (click)="addUser()">+ Add User</button>
+  </div>
+
+  <table class="user-table">
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Organization</th>
+        <th>Role</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (user of users; track user.id) {
+        <tr>
+          <td>{{ user.email }}</td>
+          <td>{{ user.organization }}</td>
+          <td>
+            @if (user.is_super_admin) {
+              <span class="role-badge super">Super Admin</span>
+            } @else {
+              <span class="role-badge user">User</span>
+            }
+          </td>
+          <td>
+            <button>Edit</button>
+            <button class="danger">Deactivate</button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

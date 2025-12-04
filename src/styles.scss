@@ -1,24 +1,4 @@
-// src/styles.scss
-@use '@angular/material' as mat;
-
-// ✅ Define a theme with NO custom palette references
-$theme: mat.define-theme((
-  color: (
-    theme-type: light,
-    // Do NOT specify primary/tertiary — use defaults
-  )
-));
-
-// ✅ Apply theme to Angular Material components
-@include mat.all-component-themes($theme);
-
-// ✅ Apply to your app
-html {
-  @include mat.theme($theme);
-  color-scheme: light;
-}
-
-// ✅ Your custom styles (no theming logic)
+/* ✅ Custom global styles only — no @tailwind */
 * {
   margin: 0;
   padding: 0;
@@ -26,8 +6,6 @@ html {
 }
 
 body {
-  font-family: 'Roboto', 'Helvetica Neue', sans-serif;
-  background: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
+  font-family: 'Inter', sans-serif;
   min-height: 100vh;
 }

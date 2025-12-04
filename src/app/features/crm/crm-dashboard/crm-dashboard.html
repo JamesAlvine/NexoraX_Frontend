@@ -1,48 +1,58 @@
 <!-- src/app/features/crm/crm-dashboard/crm-dashboard.html -->
-<div class="crm-container">
-  <h1>CRM Dashboard</h1>
+<div class="mb-8">
+  <h1 class="text-2xl font-bold">CRM Dashboard</h1>
+  <p class="text-base-content/70">Manage donors and beneficiaries</p>
+</div>
 
-  <div class="stats-grid">
-    <!-- Donors -->
-    <mat-card class="stat-card" [ngClass]="{ 'dark-mode': isDarkMode }">
-      <mat-card-content>
-        <div class="stat-icon">
-          <mat-icon>favorite</mat-icon>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+  <!-- Donors -->
+  <div class="card bg-base-100 shadow-xl">
+    <div class="card-body">
+      <div class="flex items-center justify-between">
+        <div>
+          <h3 class="text-lg font-medium text-base-content/70">Donors</h3>
+          <p class="text-3xl font-bold mt-1">{{ stats.donors }}</p>
         </div>
-        <div class="stat-content">
-          <div class="stat-label">Donors</div>
-          <div class="stat-value">{{ stats.donors }}</div>
-          <div class="stat-subtitle">Community Support</div>
+        <div class="p-3 bg-primary rounded-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-content" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg>
         </div>
-      </mat-card-content>
-    </mat-card>
+      </div>
+    </div>
+  </div>
 
-    <!-- Beneficiaries -->
-    <mat-card class="stat-card" [ngClass]="{ 'dark-mode': isDarkMode }">
-      <mat-card-content>
-        <div class="stat-icon">
-          <mat-icon>groups</mat-icon>
+  <!-- Beneficiaries -->
+  <div class="card bg-base-100 shadow-xl">
+    <div class="card-body">
+      <div class="flex items-center justify-between">
+        <div>
+          <h3 class="text-lg font-medium text-base-content/70">Beneficiaries</h3>
+          <p class="text-3xl font-bold mt-1">{{ stats.beneficiaries }}</p>
         </div>
-        <div class="stat-content">
-          <div class="stat-label">Beneficiaries</div>
-          <div class="stat-value">{{ stats.beneficiaries }}</div>
-          <div class="stat-subtitle">Active this month</div>
+        <div class="p-3 bg-secondary rounded-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-secondary-content" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
         </div>
-      </mat-card-content>
-    </mat-card>
+      </div>
+    </div>
+  </div>
 
-    <!-- Interactions -->
-    <mat-card class="stat-card" [ngClass]="{ 'dark-mode': isDarkMode }">
-      <mat-card-content>
-        <div class="stat-icon">
-          <mat-icon>edit_note</mat-icon>
+  <!-- Interactions -->
+  <div class="card bg-base-100 shadow-xl">
+    <div class="card-body">
+      <div class="flex items-center justify-between">
+        <div>
+          <h3 class="text-lg font-medium text-base-content/70">Interactions</h3>
+          <p class="text-3xl font-bold mt-1">{{ stats.interactions }}</p>
         </div>
-        <div class="stat-content">
-          <div class="stat-label">Interactions</div>
-          <div class="stat-value">{{ stats.interactions }}</div>
-          <div class="stat-subtitle">Total logged</div>
+        <div class="p-3 bg-accent rounded-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-accent-content" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-4l-2 2v-2z" />
+          </svg>
         </div>
-      </mat-card-content>
-    </mat-card>
+      </div>
+    </div>
   </div>
 </div>

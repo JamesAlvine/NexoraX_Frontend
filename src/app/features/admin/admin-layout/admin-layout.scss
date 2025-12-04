@@ -1,143 +1,18 @@
-// Light Theme (NGO Brand: Navy + Green)
-.light-theme {
-  --primary: #006400;        // Deep Green
-  --primary-light: #00b050;
-  --primary-dark: #004d00;
-  --navy: #0a1929;           // Deep Navy
-  --navy-light: #152a40;
-  --surface: #f0f4f8;        // Light Gray
-  --on-primary: white;
-  --on-surface: #1e293b;
-  --outline: #cbd5e1;
+/* src/app/features/admin/admin-layout/admin-layout.scss */
+
+/* ✅ Dark mode variables */
+:root {
+  --primary: #0f766e;        // Emerald-600
+  --primary-content: white;
 }
 
-// Dark Theme
-.dark-theme {
-  --primary: #00b050;
-  --primary-light: #4caf50;
-  --primary-dark: #007e33;
-  --navy: #0a1929;
-  --navy-light: #1e293b;
-  --surface: #0a1929;
-  --on-primary: white;
-  --on-surface: #e2e8f0;
-  --outline: #334155;
+.dark {
+  --primary: #34d399;        // Emerald-400
+  --primary-content: #0f172a;
 }
 
-// Apply theme
+/* ✅ Ensure Tailwind applies */
 body {
-  background: var(--surface);
-  color: var(--on-surface);
   margin: 0;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
-}
-
-.sidenav-container {
-  height: 100vh;
-}
-
-.sidenav {
-  width: 280px;
-  background: var(--surface);
-  border-right: 1px solid var(--outline);
-}
-
-.sidebar-header {
-  display: flex;
-  align-items: center;
-  padding: 0 16px;
-  height: 64px;
-  background: var(--primary);
-  color: var(--on-primary);
-  border-bottom: 1px solid var(--outline);
-}
-
-.logo {
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
-  margin-right: 12px;
-  object-fit: contain;
-}
-
-.logo-text {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--on-primary);
-}
-
-mat-nav-list {
-  padding-top: 0;
-}
-
-mat-list-item {
-  height: 48px;
-  color: var(--on-surface);
-  border-radius: 0 24px 24px 0;
-  margin: 0 12px 4px;
-}
-
-mat-list-item:hover {
-  background: var(--navy-light);
-}
-
-mat-icon {
-  margin-right: 16px;
-  color: var(--primary);
-}
-
-/* Header */
-.top-toolbar {
-  background: var(--primary);
-  color: var(--on-primary);
-}
-
-.toolbar-brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-right: 24px;
-}
-
-.toolbar-logo {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  object-fit: contain;
-}
-
-.toolbar-title {
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: var(--on-primary);
-}
-
-.search-field {
-  width: 320px;
-  max-width: 50vw;
-  margin: 0 24px;
-  background: rgba(255,255,255,0.15);
-  border-radius: 4px;
-}
-
-.spacer {
-  flex: 1;
-}
-
-.toolbar-icon {
-  margin-left: 8px;
-  color: var(--on-primary) !important;
-}
-
-/* Main Content */
-.main-content {
-  padding: 24px;
-  min-height: calc(100vh - 64px);
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-  .search-field {
-    width: 160px;
-  }
+  font-family: 'Inter', sans-serif;
 }

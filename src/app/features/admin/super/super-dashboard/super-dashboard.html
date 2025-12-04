@@ -1,39 +1,75 @@
 <!-- src/app/features/admin/super/super-dashboard/super-dashboard.html -->
-<mat-card class="dashboard">
-  <mat-card-title>NGO Command Center</mat-card-title>
-  <mat-card-subtitle>Manage your humanitarian operations</mat-card-subtitle>
+<div class="mb-8">
+  <h1 class="text-2xl font-bold">NGO Command Center</h1>
+  <p class="text-base-content/70">Manage your humanitarian operations</p>
+</div>
 
-  <div class="stats-grid">
-    <mat-card class="stat-card" (click)="navigateTo('volunteers/hub')">
-      <mat-card-content>
-        <mat-icon>group</mat-icon>
-        <h3>87 Volunteers</h3>
-        <p>Active this month</p>
-      </mat-card-content>
-    </mat-card>
-
-    <mat-card class="stat-card" (click)="navigateTo('hr')">
-      <mat-card-content>
-        <mat-icon>people</mat-icon>
-        <h3>12 Staff</h3>
-        <p>HR Directory</p>
-      </mat-card-content>
-    </mat-card>
-
-    <mat-card class="stat-card" (click)="navigateTo('crm')">
-      <mat-card-content>
-        <mat-icon>contacts</mat-icon>
-        <h3>240 Donors</h3>
-        <p>Community Support</p>
-      </mat-card-content>
-    </mat-card>
-
-    <mat-card class="stat-card" (click)="navigateTo('volunteers/impact')">
-      <mat-card-content>
-        <mat-icon>show_chart</mat-icon>
-        <h3>1,240 Impact</h3>
-        <p>Hours Logged</p>
-      </mat-card-content>
-    </mat-card>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+  <!-- Volunteers -->
+  <div class="card bg-base-100 shadow-xl cursor-pointer hover:shadow-2xl transition-shadow" (click)="navigateTo('volunteers/hub')">
+    <div class="card-body">
+      <div class="flex items-center gap-4">
+        <div class="p-3 bg-emerald-100 rounded-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+        </div>
+        <div>
+          <h3 class="text-2xl font-bold">{{ stats.volunteers }}</h3>
+          <p class="text-base-content/70">Volunteers</p>
+        </div>
+      </div>
+    </div>
   </div>
-</mat-card>
+
+  <!-- Staff -->
+  <div class="card bg-base-100 shadow-xl cursor-pointer hover:shadow-2xl transition-shadow" (click)="navigateTo('hr')">
+    <div class="card-body">
+      <div class="flex items-center gap-4">
+        <div class="p-3 bg-blue-100 rounded-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
+        </div>
+        <div>
+          <h3 class="text-2xl font-bold">{{ stats.staff }}</h3>
+          <p class="text-base-content/70">HR Staff</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Donors -->
+  <div class="card bg-base-100 shadow-xl cursor-pointer hover:shadow-2xl transition-shadow" (click)="navigateTo('crm')">
+    <div class="card-body">
+      <div class="flex items-center gap-4">
+        <div class="p-3 bg-purple-100 rounded-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <div>
+          <h3 class="text-2xl font-bold">{{ stats.donors }}</h3>
+          <p class="text-base-content/70">Donors</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Impact -->
+  <div class="card bg-base-100 shadow-xl cursor-pointer hover:shadow-2xl transition-shadow" (click)="navigateTo('volunteers/impact')">
+    <div class="card-body">
+      <div class="flex items-center gap-4">
+        <div class="p-3 bg-amber-100 rounded-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-5v5m-4-4h12a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4a2 2 0 012-2h12z" />
+          </svg>
+        </div>
+        <div>
+          <h3 class="text-2xl font-bold">{{ stats.impact }}</h3>
+          <p class="text-base-content/70">Impact Hours</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

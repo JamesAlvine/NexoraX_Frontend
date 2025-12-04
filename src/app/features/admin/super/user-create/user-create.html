@@ -1,60 +1,37 @@
 <!-- src/app/features/admin/super/user-create/user-create.html -->
-<div class="user-create-container">
-  <h1>Create New User</h1>
-  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="create-form">
+<div class="form-container">
+  <h2>Create New User</h2>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="form-group">
-      <label for="email">Email</label>
-      <input id="email" formControlName="email" type="email" placeholder="user@ngo.org" />
-      @if (form.controls.email.invalid && form.controls.email.touched) {
-        <div class="error-message">Email is required and must be valid</div>
-      }
+      <label>Email</label>
+      <input type="email" formControlName="email" />
     </div>
-
     <div class="form-group">
-      <label for="password">Password</label>
-      <input id="password" formControlName="password" type="password" placeholder="••••••••" />
-      @if (form.controls.password.invalid && form.controls.password.touched) {
-        <div class="error-message">Password must be at least 8 characters</div>
-      }
+      <label>Password</label>
+      <input type="password" formControlName="password" />
     </div>
-
     <div class="form-group">
-      <label>Assign Apps</label>
+      <label>Organization</label>
+      <input type="text" formControlName="organization" />
+    </div>
+    <div class="form-group">
+      <label>Apps</label>
       <div class="app-checkboxes">
         @for (app of apps; track app) {
-          <label class="app-checkbox">
-            <input type="checkbox" (change)="toggleApp(app, $event)" />
+          <label>
+            <input type="checkbox" (change)="toggleApp(app, $event)" [checked]="selectedApps.includes(app)" />
             {{ app }}
           </label>
         }
       </div>
     </div>
-
-    <div class="form-group">
-      <label>Role</label>
-      <div class="role-radio">
-        <label>
-          <input type="radio" value="regular" formControlName="role" />
-          Regular User
-        </label>
-        <label>
-          <input type="radio" value="super_admin" formControlName="role" />
-          Super Admin
-        </label>
-      </div>
+    <div class="form-group checkbox">
+      <input type="checkbox" formControlName="is_super_admin" id="super" />
+      <label for="super">Super Admin</label>
     </div>
-
     <div class="form-actions">
-      <button type="submit" [disabled]="isLoading" class="btn btn-primary">
-        {{ isLoading ? 'Creating...' : 'Create User' }}
-      </button>
-      <button type="button" (click)="cancel()" class="btn btn-secondary">Cancel</button>
+      <button type="submit" class="btn-save">Create User</button>
+      <button type="button" (click)="cancel()" class="btn-cancel">Cancel</button>
     </div>
-
-    @if (message) {
-      <div class="message" [class.message-success]="!errorMessage" [class.message-error]="errorMessage">
-        {{ message }}
-      </div>
-    }
   </form>
 </div>

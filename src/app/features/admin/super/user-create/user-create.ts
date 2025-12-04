@@ -20,41 +20,31 @@ export class UserCreateComponent {
   form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(8)]],
-    is_super_admin: [false]
+    is_super_admin: [false],
+    organization: ['Neos NGO', Validators.required]
   });
 
-  apps = ['HR', 'Volunteers', 'CRM', 'Leave'];
+  apps = ['HR', 'Volunteers', 'CRM'];
   selectedApps: string[] = [];
-  message = '';
-  errorMessage = '';
-  isLoading = false;
 
   onSubmit() {
     if (this.form.invalid) return;
-    this.isLoading = true;
-    this.message = '';
-    this.errorMessage = '';
 
-    const { email, password, is_super_admin } = this.form.getRawValue();
+    const { email, password, is_super_admin, organization } = this.form.getRawValue();
 
     this.api.post('users/create/', {
       email,
       password,
       is_super_admin,
+      organization,
       apps: this.selectedApps
     }).subscribe({
       next: () => {
-        this.message = '✅ User created successfully';
-        this.form.reset({ email: '', password: '', is_super_admin: false });
-        this.selectedApps = [];
-        setTimeout(() => {
-          this.router.navigate(['/admin/super/users']);
-        }, 2000);
+        alert('User created successfully');
+        this.router.navigate(['/admin/super/users']);
       },
-      error: (error) => {
-        console.error('User creation failed:', error);
-        this.errorMessage = error?.error?.error || 'Failed to create user. Please try again.';
-        this.isLoading = false;
+      error: (err) => {
+        alert(err?.error?.error || 'Failed to create user');
       }
     });
   }
@@ -66,10 +56,6 @@ export class UserCreateComponent {
     } else {
       this.selectedApps = this.selectedApps.filter(a => a !== app);
     }
-  }
-
-  isAppSelected(app: string): boolean {
-    return this.selectedApps.includes(app);
   }
 
   cancel() {

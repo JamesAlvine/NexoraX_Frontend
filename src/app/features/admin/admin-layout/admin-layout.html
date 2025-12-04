@@ -1,140 +1,170 @@
-<mat-sidenav-container class="sidenav-container" hasBackdrop="false">
-  <!-- Sidebar -->
-  <mat-sidenav
-    #sidenav
-    [mode]="isMobile ? 'over' : 'side'"
-    [opened]="!isMobile"
-    class="sidenav"
-    fixedInViewport="true"
-    fixedTopGap="64">
-    
-    <div class="sidebar-header">
-      <img src="/logo.jpeg" alt="Nèos Sirius" class="logo" />
-      <span class="logo-text" *ngIf="!isMobile">Nèos Sirius</span>
+<!-- src/app/features/admin/admin-layout/admin-layout.html -->
+<div class="flex h-screen bg-base-100 text-base-content">
+  <!-- SIDEBAR (Zoho-style: no logo inside) -->
+  <aside
+    class="flex flex-col bg-base-100 border-r border-base-200 transition-all duration-300"
+    [class.w-56]="!isSidebarCollapsed"
+    [class.w-18]="isSidebarCollapsed"
+  >
+    <div class="p-4 flex justify-between items-center">
+      <button (click)="toggleSidebar()" class="p-2 rounded hover:bg-base-200" aria-label="Toggle sidebar">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
     </div>
 
-    <mat-nav-list>
+    <nav class="flex-1 mt-4 overflow-y-auto p-2">
       <!-- Super Admin -->
-      <h3 matSubheader *ngIf="!isMobile">Super Admin</h3>
-      <a mat-list-item (click)="navigateTo('super')">
-        <mat-icon>dashboard</mat-icon>
-        <span>Dashboard</span>
+      <div *ngIf="!isSidebarCollapsed" class="px-4 py-2 text-xs font-semibold text-base-content/70 uppercase tracking-wider">Super Admin</div>
+      <a (click)="navigateTo('super')" class="flex items-center gap-3 p-3 rounded cursor-pointer hover:bg-base-200">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+        </svg>
+        <span *ngIf="!isSidebarCollapsed">Dashboard</span>
       </a>
 
       <!-- HR -->
-      <h3 matSubheader *ngIf="!isMobile">HR & Staff</h3>
-      <a mat-list-item (click)="navigateTo('hr')">
-        <mat-icon>people</mat-icon>
-        <span>Staff Directory</span>
+      <div *ngIf="!isSidebarCollapsed" class="px-4 py-2 text-xs font-semibold text-base-content/70 uppercase tracking-wider mt-4">HR & Staff</div>
+      <a (click)="navigateTo('hr')" class="flex items-center gap-3 p-3 rounded cursor-pointer hover:bg-base-200">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+        </svg>
+        <span *ngIf="!isSidebarCollapsed">Staff Directory</span>
       </a>
-      <a mat-list-item (click)="navigateTo('hr/leave')">
-        <mat-icon>event</mat-icon>
-        <span>Leave Requests</span>
+      <a (click)="navigateTo('hr/leave')" class="flex items-center gap-3 p-3 rounded cursor-pointer hover:bg-base-200">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+        <span *ngIf="!isSidebarCollapsed">Leave Requests</span>
       </a>
 
       <!-- Volunteers -->
-      <h3 matSubheader *ngIf="!isMobile">Volunteers</h3>
-      <a mat-list-item (click)="navigateTo('volunteers/hub')">
-        <mat-icon>group</mat-icon>
-        <span>Volunteer Hub</span>
+      <div *ngIf="!isSidebarCollapsed" class="px-4 py-2 text-xs font-semibold text-base-content/70 uppercase tracking-wider mt-4">Volunteers</div>
+      <a (click)="navigateTo('volunteers/hub')" class="flex items-center gap-3 p-3 rounded cursor-pointer hover:bg-base-200">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+        <span *ngIf="!isSidebarCollapsed">Volunteer Hub</span>
       </a>
-      <a mat-list-item (click)="navigateTo('volunteers/skill-matrix')">
-        <mat-icon>psychology</mat-icon>
-        <span>Skill Matrix</span>
+      <a (click)="navigateTo('volunteers/skill-matrix')" class="flex items-center gap-3 p-3 rounded cursor-pointer hover:bg-base-200">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+        <span *ngIf="!isSidebarCollapsed">Skill Matrix</span>
       </a>
-      <a mat-list-item (click)="navigateTo('volunteers/impact')">
-        <mat-icon>show_chart</mat-icon>
-        <span>Impact Dashboard</span>
+      <a (click)="navigateTo('volunteers/impact')" class="flex items-center gap-3 p-3 rounded cursor-pointer hover:bg-base-200">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-5v5m-4-4h12a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4a2 2 0 012-2h12z" />
+        </svg>
+        <span *ngIf="!isSidebarCollapsed">Impact Dashboard</span>
       </a>
 
       <!-- CRM -->
-      <h3 matSubheader *ngIf="!isMobile">CRM</h3>
-      <a mat-list-item (click)="navigateTo('crm')">
-        <mat-icon>contacts</mat-icon>
-        <span>Donors & Beneficiaries</span>
+      <div *ngIf="!isSidebarCollapsed" class="px-4 py-2 text-xs font-semibold text-base-content/70 uppercase tracking-wider mt-4">CRM</div>
+      <a (click)="navigateTo('crm')" class="flex items-center gap-3 p-3 rounded cursor-pointer hover:bg-base-200">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+        <span *ngIf="!isSidebarCollapsed">Donors & Beneficiaries</span>
       </a>
-    </mat-nav-list>
-  </mat-sidenav>
+    </nav>
+  </aside>
 
-  <!-- Main Content -->
-  <mat-sidenav-content>
-    <!-- Header -->
-    <mat-toolbar color="primary" class="top-toolbar">
-      <button mat-icon-button (click)="sidenav.toggle()" *ngIf="isMobile" class="menu-toggle">
-        <mat-icon>menu</mat-icon>
-      </button>
-
-      <div class="toolbar-brand" *ngIf="!isMobile">
-        <img src="/logo.jpeg" alt="Nèos Sirius" class="toolbar-logo" />
-        <span class="toolbar-title">Nèos Sirius Admin</span>
+  <!-- MAIN CONTENT -->
+  <div class="flex flex-col flex-1">
+    <!-- ZOHO ONE-STYLE HEADER -->
+    <header class="bg-white border-b border-base-200 px-6 py-3 flex items-center">
+      <!-- Logo (left) -->
+      <div class="flex items-center gap-3 mr-8">
+        <img src="/logo.jpeg" alt="Nèos Sirius" class="h-6 w-6 rounded" />
+        <span class="font-semibold text-primary">Nèos Sirius</span>
       </div>
 
-      <!-- Search Field (NO floatLabel) -->
-      <mat-form-field class="search-field">
-        <mat-icon matPrefix>search</mat-icon>
-        <input 
-          matInput 
-          placeholder="Search..." 
-          [(ngModel)]="searchQuery"
-          (keyup.enter)="onSearch()"
-        />
-      </mat-form-field>
+      <!-- Global Search (center) -->
+      <div class="flex-1 max-w-2xl hidden md:block">
+        <div class="relative">
+          <input
+            type="text"
+            placeholder="Search across all modules..."
+            class="w-full pl-10 pr-4 py-2 bg-base-100 rounded-lg border border-base-200 focus:outline-none focus:ring-2 focus:ring-primary"
+            [(ngModel)]="searchQuery"
+            (keyup.enter)="onSearch()"
+          />
+          <svg class="w-5 h-5 absolute left-3 top-2.5 text-base-content/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+      </div>
 
-      <div class="spacer"></div>
+      <!-- Actions (far right) -->
+      <div class="flex items-center gap-3 ml-auto">
+        <!-- Mobile Search -->
+        <button class="md:hidden p-2 rounded hover:bg-base-200" (click)="onSearch()" aria-label="Search">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </button>
 
-      <!-- Dark Mode Toggle -->
-      <button mat-icon-button (click)="toggleDarkMode()" class="toolbar-icon">
-        <mat-icon>{{ isDarkMode ? 'light_mode' : 'dark_mode' }}</mat-icon>
-      </button>
+        <!-- Quick Create (+) -->
+        <button
+          (click)="quickCreate()"
+          class="p-2 rounded-full bg-primary text-primary-content hover:bg-primary-focus"
+          aria-label="Quick create"
+          title="Quick Create"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+          </svg>
+        </button>
 
-      <!-- Notifications -->
-      <button 
-        mat-icon-button 
-        [matBadge]="unreadCount" 
-        matBadgeColor="warn"
-        [matMenuTriggerFor]="notificationMenu"
-        class="toolbar-icon">
-        <mat-icon>notifications</mat-icon>
-      </button>
-      <mat-menu #notificationMenu="matMenu">
-        <button mat-menu-item (click)="markAllAsRead()">
-          <mat-icon>done_all</mat-icon>
-          <span>Mark all as read</span>
-        </button>
-        <mat-divider></mat-divider>
-        <button mat-menu-item>
-          <mat-icon>event</mat-icon>
-          <span>New leave request</span>
-        </button>
-        <button mat-menu-item>
-          <mat-icon>person_add</mat-icon>
-          <span>New volunteer joined</span>
-        </button>
-      </mat-menu>
+        <!-- Activity Feed -->
+        <div class="relative">
+          <button class="p-2 rounded hover:bg-base-200" aria-label="Activity">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span *ngIf="unreadCount" class="absolute -top-1 -right-1 bg-error text-xs text-white rounded-full h-5 w-5 flex items-center justify-center">
+              {{ unreadCount }}
+            </span>
+          </button>
+        </div>
 
-      <!-- User Menu -->
-      <button mat-icon-button [matMenuTriggerFor]="userMenu" class="toolbar-icon">
-        <mat-icon>account_circle</mat-icon>
-      </button>
-      <mat-menu #userMenu="matMenu">
-        <button mat-menu-item [disabled]="true">
-          <mat-icon>email</mat-icon>
-          <span>{{ currentUser?.email }}</span>
-        </button>
-        <button mat-menu-item (click)="navigateTo('super/organization')">
-          <mat-icon>settings</mat-icon>
-          <span>Organization</span>
-        </button>
-        <button mat-menu-item (click)="logout()">
-          <mat-icon>logout</mat-icon>
-          <span>Logout</span>
-        </button>
-      </mat-menu>
-    </mat-toolbar>
+        <!-- Notifications -->
+        <div class="relative">
+          <button class="p-2 rounded hover:bg-base-200" aria-label="Notifications">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM9 7H4l5-5v5z" />
+            </svg>
+          </button>
+        </div>
 
-    <!-- Page Content -->
-    <div class="main-content">
+        <!-- Dark Mode -->
+        <button (click)="toggleDarkMode()" class="p-2 rounded hover:bg-base-200" aria-label="Toggle dark mode">
+          <svg *ngIf="!isDarkMode" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.978 9.978 0 0012 21a9.978 9.978 0 008.354-5.646z" />
+          </svg>
+          <svg *ngIf="isDarkMode" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+        </button>
+
+        <!-- User Avatar -->
+        <div class="dropdown dropdown-end">
+          <div tabindex="0" class="w-8 h-8 rounded-full bg-primary text-primary-content flex items-center justify-center font-semibold cursor-pointer">
+            {{ currentUser?.email?.charAt(0)?.toUpperCase() || 'U' }}
+          </div>
+          <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 mt-2">
+            <li><span class="truncate text-base-content/70 cursor-default">{{ currentUser?.email }}</span></li>
+            <li><a (click)="navigateTo('super/organization')">Organization</a></li>
+            <li><a (click)="logout()">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-1 p-6 overflow-y-auto">
       <router-outlet></router-outlet>
-    </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+    </main>
+  </div>
+</div>

@@ -3,32 +3,34 @@
   <div class="login-card">
     <!-- Logo -->
     <img src="/logo.jpeg" alt="Nèos Sirius" class="logo" />
+    
+    <!-- Title -->
+    <h1 class="title">Sign in to your account</h1>
 
-    <h2 class="title">Sign in to your account</h2>
-
+    <!-- Login Form -->
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="login-form">
-      <!-- Email Field -->
+      <!-- Email -->
       <div class="form-group">
         <label for="email">Email</label>
-        <input id="email" formControlName="email" type="email" placeholder="Enter your email" />
+        <input id="email" formControlName="email" type="email" placeholder="you@ngo.org" />
         @if (form.controls.email.invalid && form.controls.email.touched) {
           <div class="error-message">Valid email is required</div>
         }
       </div>
 
-      <!-- Password Field -->
+      <!-- Password -->
       <div class="form-group">
         <label for="password">Password</label>
-        <input id="password" formControlName="password" type="password" placeholder="Enter your password" />
+        <input id="password" formControlName="password" type="password" placeholder="••••••••" />
         @if (form.controls.password.invalid && form.controls.password.touched) {
           <div class="error-message">Minimum 8 characters</div>
         }
       </div>
 
-      <!-- Forgot Password Link -->
+      <!-- Forgot Password -->
       <a href="#" class="forgot-password">Forgot password?</a>
 
-      <!-- Sign In Button -->
+      <!-- Submit Button -->
       <button 
         type="submit" 
         [disabled]="isLoading || form.invalid" 
@@ -36,16 +38,21 @@
       >
         {{ isLoading ? 'Signing in...' : 'Sign In' }}
       </button>
-
-      <!-- Error Message -->
-      @if (errorMessage) {
-        <div class="error-alert">{{ errorMessage }}</div>
-      }
     </form>
 
+    <!-- Success/Error Alerts (Bottom Left) -->
+    @if (errorMessage) {
+      <div class="alert alert-error mt-4 w-full">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>{{ errorMessage }}</span>
+      </div>
+    }
+
     <!-- Footer -->
-    <footer class="login-footer">
-      © 2025 - Nèos Sirius
+    <footer class="mt-6 text-center text-sm text-base-content/60">
+      © 2025 - Nèos Sirius NGO Platform
     </footer>
   </div>
 </div>
