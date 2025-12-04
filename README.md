@@ -2,7 +2,7 @@
 # nexoraX — Frontend (Angular v20)
 
 Modern, secure, and modular frontend for NGO management
-Built with Angular v20, SCSS, and standalone components — inspired by Zoho One ProPlus with custom features for HR, Volunteers, CRM, and more. 
+Built with Angular v20, SCSS, and standalone components
 
 
 
