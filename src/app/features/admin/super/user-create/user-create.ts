@@ -1,8 +1,8 @@
 // src/app/features/admin/super/user-create/user-create.ts
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiService } from '../../../../core/services/api.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -12,41 +12,66 @@ import { CommonModule } from '@angular/common';
   templateUrl: './user-create.html',
   styleUrls: ['./user-create.scss']
 })
-export class UserCreateComponent {
+export class UserCreateComponent implements OnInit {
   private fb = inject(FormBuilder);
   private api = inject(ApiService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
+  isEdit = false;
+  userId = 0;
   form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(8)]],
+    password: ['', this.isEdit ? [] : [Validators.required, Validators.minLength(8)]],
     is_super_admin: [false],
+    is_active: [true],
     organization: ['Neos NGO', Validators.required]
   });
 
   apps = ['HR', 'Volunteers', 'CRM'];
   selectedApps: string[] = [];
 
+  ngOnInit() {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.isEdit = true;
+      this.userId = +id;
+      this.loadUser();
+    }
+  }
+
+  loadUser() {
+    this.api.get<any>(`users/${this.userId}/`).subscribe(user => {
+      this.form.patchValue({
+        email: user.email,
+        is_super_admin: user.is_super_admin,
+        is_active: user.is_active,
+        organization: user.organization
+      });
+      this.selectedApps = user.apps;
+    });
+  }
+
   onSubmit() {
     if (this.form.invalid) return;
 
-    const { email, password, is_super_admin, organization } = this.form.getRawValue();
+    const data = {
+      ...this.form.getRawValue(),
+      apps: this.selectedApps,
+      ...(this.isEdit ? {} : { password: this.form.value.password })
+    };
 
-    this.api.post('users/create/', {
-      email,
-      password,
-      is_super_admin,
-      organization,
-      apps: this.selectedApps
-    }).subscribe({
-      next: () => {
+    if (this.isEdit) {
+      this.api.put(`users/${this.userId}/`, data).subscribe(() => {
+        alert('User updated successfully');
+        this.router.navigate(['/admin/super/users']);
+      });
+    } else {
+      this.api.post('users/create/', data).subscribe(() => {
         alert('User created successfully');
         this.router.navigate(['/admin/super/users']);
-      },
-      error: (err) => {
-        alert(err?.error?.error || 'Failed to create user');
-      }
-    });
+      });
+    }
   }
 
   toggleApp(app: string, event: Event) {

@@ -1,4 +1,4 @@
-//src/app/features/admin/super/user-management/user-list.ts
+// src/app/features/admin/super/user-management/user-list.ts
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../../../../core/services/api.service';
@@ -8,7 +8,9 @@ interface UserItem {
   id: number;
   email: string;
   is_super_admin: boolean;
+  is_active: boolean;
   organization: string;
+  apps: string[];
 }
 
 @Component({
@@ -38,5 +40,24 @@ export class UserList implements OnInit {
 
   addUser() {
     this.router.navigate(['/admin/super/users/new']);
+  }
+
+  editUser(id: number) {
+    this.router.navigate([`/admin/super/users/${id}/edit`]);
+  }
+
+  toggleActive(user: UserItem) {
+    const newStatus = !user.is_active;
+    this.api.put(`users/${user.id}/`, { is_active: newStatus }).subscribe(() => {
+      user.is_active = newStatus;
+    });
+  }
+
+  deleteUser(id: number) {
+    if (confirm('Are you sure you want to delete this user?')) {
+      this.api.delete(`users/${id}/`).subscribe(() => {
+        this.loadUsers();
+      });
+    }
   }
 }

@@ -1,8 +1,7 @@
-<!-- src/app/features/admin/super/user-list/user-list.html -->
 <div class="user-management">
   <div class="page-header">
     <h1>User Management</h1>
-    <button (click)="addUser()">+ Add User</button>
+    <button (click)="addUser()" class="btn btn-success">+ Add User</button>
   </div>
 
   <table class="user-table">
@@ -11,6 +10,8 @@
         <th>Email</th>
         <th>Organization</th>
         <th>Role</th>
+        <th>Apps</th>
+        <th>Status</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -20,15 +21,27 @@
           <td>{{ user.email }}</td>
           <td>{{ user.organization }}</td>
           <td>
-            @if (user.is_super_admin) {
-              <span class="role-badge super">Super Admin</span>
-            } @else {
-              <span class="role-badge user">User</span>
-            }
+            <span [class]="'role-badge ' + (user.is_super_admin ? 'super' : 'user')">
+              {{ user.is_super_admin ? 'Super Admin' : 'User' }}
+            </span>
+          </td>
+          <td>{{ user.apps.join(', ') }}</td>
+          <td>
+            <span [class]="'status ' + (user.is_active ? 'active' : 'inactive')">
+              {{ user.is_active ? 'Active' : 'Inactive' }}
+            </span>
           </td>
           <td>
-            <button>Edit</button>
-            <button class="danger">Deactivate</button>
+            <button (click)="editUser(user.id)" class="btn btn-sm">Edit</button>
+            <button 
+              (click)="toggleActive(user)" 
+              [class.btn-success]="!user.is_active" 
+              [class.btn-error]="user.is_active"
+              class="btn btn-sm"
+            >
+              {{ user.is_active ? 'Deactivate' : 'Activate' }}
+            </button>
+            <button (click)="deleteUser(user.id)" class="btn btn-sm btn-error">Delete</button>
           </td>
         </tr>
       }
