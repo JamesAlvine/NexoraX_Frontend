@@ -1,6 +1,6 @@
 <!-- src/app/features/admin/admin-layout/admin-layout.html -->
 <div class="flex h-screen bg-base-100 text-base-content">
-  <!-- SIDEBAR (Zoho-style: no logo inside) -->
+  <!-- SIDEBAR -->
   <aside
     class="flex flex-col bg-base-100 border-r border-base-200 transition-all duration-300"
     [class.w-56]="!isSidebarCollapsed"
@@ -22,6 +22,14 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
         </svg>
         <span *ngIf="!isSidebarCollapsed">Dashboard</span>
+      </a>
+
+      <!-- ✅ MANAGE USERS — POINTS TO /admin/super/users -->
+      <a (click)="navigateTo('super/users')" class="flex items-center gap-3 p-3 rounded cursor-pointer hover:bg-base-200">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+        <span *ngIf="!isSidebarCollapsed">Manage Users</span>
       </a>
 
       <!-- HR -->
@@ -73,20 +81,18 @@
 
   <!-- MAIN CONTENT -->
   <div class="flex flex-col flex-1">
-    <!-- ZOHO ONE-STYLE HEADER -->
+    <!-- HEADER -->
     <header class="bg-white border-b border-base-200 px-6 py-3 flex items-center">
-      <!-- Logo (left) -->
       <div class="flex items-center gap-3 mr-8">
         <img src="/logo.jpeg" alt="Nèos Sirius" class="h-6 w-6 rounded" />
         <span class="font-semibold text-primary">Nèos Sirius</span>
       </div>
 
-      <!-- Global Search (center) -->
-      <div class="flex-1 max-w-2xl hidden md:block">
+      <div class="flex-1 max-w-2xl">
         <div class="relative">
           <input
             type="text"
-            placeholder="Search across all modules..."
+            placeholder="Search..."
             class="w-full pl-10 pr-4 py-2 bg-base-100 rounded-lg border border-base-200 focus:outline-none focus:ring-2 focus:ring-primary"
             [(ngModel)]="searchQuery"
             (keyup.enter)="onSearch()"
@@ -97,50 +103,14 @@
         </div>
       </div>
 
-      <!-- Actions (far right) -->
       <div class="flex items-center gap-3 ml-auto">
-        <!-- Mobile Search -->
-        <button class="md:hidden p-2 rounded hover:bg-base-200" (click)="onSearch()" aria-label="Search">
+        <button (click)="toggleSidebar()" class="lg:hidden p-2 rounded hover:bg-base-200">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
 
-        <!-- Quick Create (+) -->
-        <button
-          (click)="quickCreate()"
-          class="p-2 rounded-full bg-primary text-primary-content hover:bg-primary-focus"
-          aria-label="Quick create"
-          title="Quick Create"
-        >
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-          </svg>
-        </button>
-
-        <!-- Activity Feed -->
-        <div class="relative">
-          <button class="p-2 rounded hover:bg-base-200" aria-label="Activity">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <span *ngIf="unreadCount" class="absolute -top-1 -right-1 bg-error text-xs text-white rounded-full h-5 w-5 flex items-center justify-center">
-              {{ unreadCount }}
-            </span>
-          </button>
-        </div>
-
-        <!-- Notifications -->
-        <div class="relative">
-          <button class="p-2 rounded hover:bg-base-200" aria-label="Notifications">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM9 7H4l5-5v5z" />
-            </svg>
-          </button>
-        </div>
-
-        <!-- Dark Mode -->
-        <button (click)="toggleDarkMode()" class="p-2 rounded hover:bg-base-200" aria-label="Toggle dark mode">
+        <button (click)="toggleDarkMode()" class="p-2 rounded hover:bg-base-200">
           <svg *ngIf="!isDarkMode" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.978 9.978 0 0012 21a9.978 9.978 0 008.354-5.646z" />
           </svg>
@@ -149,7 +119,6 @@
           </svg>
         </button>
 
-        <!-- User Avatar -->
         <div class="dropdown dropdown-end">
           <div tabindex="0" class="w-8 h-8 rounded-full bg-primary text-primary-content flex items-center justify-center font-semibold cursor-pointer">
             {{ currentUser?.email?.charAt(0)?.toUpperCase() || 'U' }}
