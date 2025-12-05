@@ -23,7 +23,6 @@ export class Login implements OnInit {
   });
 
   isLoading = false;
-  // ✅ Default error message matches XC360
   errorMessage = '';
 
   ngOnInit() {
@@ -41,12 +40,19 @@ export class Login implements OnInit {
     this.api.login(email, password).subscribe({
       next: (user) => {
         localStorage.setItem('user', JSON.stringify(user));
-        const redirect = user.is_super_admin ? '/admin/super' : '/user/dashboard';
-        this.router.navigate([redirect]);
+        
+        // ✅ Redirect to password change if required
+        if (user.must_change_password) {
+          this.router.navigate(['/change-password']);
+        } else {
+          const redirect = user.is_super_admin ? '/admin/super' : '/user/dashboard';
+          this.router.navigate([redirect]);
+        }
       },
       error: (err) => {
-      
-        this.errorMessage = 'Access Denied';
+        this.errorMessage = typeof err === 'string' 
+          ? err 
+          : 'Invalid email or password. Please try again.';
         this.isLoading = false;
       }
     });

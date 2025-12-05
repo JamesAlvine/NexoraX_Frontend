@@ -1,0 +1,45 @@
+<!-- src/app/features/hr/hr-list/hr-list.html -->
+<div class="hr-container">
+  <div class="page-header">
+    <h1>HR Staff Directory</h1>
+    <button class="btn btn-success" (click)="addStaff()">
+      + Add Staff
+    </button>
+  </div>
+
+  @if (errorMessage) {
+    <div class="alert alert-error">{{ errorMessage }}</div>
+  }
+
+  <div class="staff-grid">
+    @if (staff.length === 0) {
+      <div class="empty-state">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+        </svg>
+        <p>No HR staff found</p>
+        <button class="btn btn-success" (click)="addStaff()">Add First Staff</button>
+      </div>
+    }
+
+    @for (user of staff; track user.id) {
+      <div class="staff-card">
+        <div class="staff-avatar">
+          {{ user.email.charAt(0).toUpperCase() }}
+        </div>
+        <div class="staff-info">
+          <h3>{{ user.email }}</h3>
+          <p class="staff-role">{{ user.position || 'HR Staff' }}</p>
+          <p class="staff-dept">{{ user.department || 'HR Department' }}</p>
+          @if (user.hire_date) {
+            <p class="staff-date">Hired: {{ user.hire_date | date }}</p>
+          }
+        </div>
+        <div class="staff-actions">
+          <button class="btn btn-sm">Edit</button>
+          <button class="btn btn-sm btn-outline">View</button>
+        </div>
+      </div>
+    }
+  </div>
+</div>

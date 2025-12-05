@@ -1,29 +1,45 @@
+<!-- src/app/features/hr/leave-request/leave-request.html -->
 <div class="leave-form-container">
   <h1>Submit Leave Request</h1>
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="leave-form">
     <div class="form-group">
       <label>Staff Email *</label>
       <input formControlName="staff_email" type="email" placeholder="staff@ngo.org" />
+      @if (form.controls.staff_email.invalid && form.controls.staff_email.touched) {
+        <span class="error">Valid email is required</span>
+      }
     </div>
     <div class="form-row">
       <div class="form-group">
         <label>Start Date *</label>
         <input formControlName="start_date" type="date" />
+        @if (form.controls.start_date.invalid && form.controls.start_date.touched) {
+          <span class="error">Start date is required</span>
+        }
       </div>
       <div class="form-group">
         <label>End Date *</label>
         <input formControlName="end_date" type="date" />
+        @if (form.controls.end_date.invalid && form.controls.end_date.touched) {
+          <span class="error">End date is required</span>
+        }
       </div>
     </div>
     <div class="form-group">
-      <label>Reason *</label>
+      <label>Reason * (min 10 characters)</label>
       <textarea formControlName="reason" placeholder="Reason for leave..."></textarea>
+      @if (form.controls.reason.invalid && form.controls.reason.touched) {
+        <span class="error">Reason is required (min 10 chars)</span>
+      }
     </div>
     <button type="submit" [disabled]="isLoading" class="btn-primary">
       {{ isLoading ? 'Submitting...' : 'Submit Leave Request' }}
     </button>
     @if (message) {
-      <div class="alert">{{ message }}</div>
+      <div class="alert alert-success">{{ message }}</div>
+    }
+    @if (errorMessage) {
+      <div class="alert alert-error">{{ errorMessage }}</div>
     }
   </form>
 </div>

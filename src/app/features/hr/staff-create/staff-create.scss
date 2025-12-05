@@ -1,5 +1,5 @@
-/* src/app/features/hr/leave-request/leave-request.scss */
-.leave-form-container {
+/* src/app/features/hr/staff-create/staff-create.scss */
+.form-container {
   max-width: 600px;
   margin: 2rem auto;
   padding: 2rem;
@@ -8,13 +8,27 @@
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
-.leave-form-container h1 {
-  text-align: center;
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 1.5rem;
+}
+
+.form-header h1 {
+  font-size: 1.5rem;
   color: #1e293b;
 }
 
-.leave-form {
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #94a3b8;
+}
+
+.staff-form {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
@@ -32,16 +46,11 @@
 }
 
 .form-group input,
-.form-group textarea {
+.form-group select {
   padding: 0.75rem;
   border: 1px solid #cbd5e1;
   border-radius: 8px;
   font-size: 1rem;
-}
-
-.form-group textarea {
-  min-height: 100px;
-  resize: vertical;
 }
 
 .form-row {
@@ -59,36 +68,39 @@
   margin-top: 0.25rem;
 }
 
-.btn-primary {
+.alert-error {
+  background: #fee;
+  color: #dc2626;
   padding: 0.75rem;
-  background: #0d9488;
-  color: white;
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
   border: none;
   border-radius: 8px;
   font-weight: 600;
-  font-size: 1rem;
   cursor: pointer;
-  transition: opacity 0.2s;
 }
 
-.btn-primary:disabled {
+.btn:disabled {
   opacity: 0.7;
   cursor: not-allowed;
 }
 
-.alert {
-  padding: 0.75rem;
-  border-radius: 8px;
-  margin-top: 1rem;
-  text-align: center;
+.btn-outline {
+  background: #f1f5f9;
+  color: #475569;
 }
 
-.alert-success {
-  background: #dcfce7;
-  color: #166534;
-}
-
-.alert-error {
-  background: #fee;
-  color: #dc2626;
+.btn-success {
+  background: #0d9488;
+  color: white;
 }

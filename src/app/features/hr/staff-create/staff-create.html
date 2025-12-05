@@ -1,0 +1,62 @@
+<!-- src/app/features/hr/staff-create/staff-create.html -->
+<div class="form-container">
+  <div class="form-header">
+    <h1>Add New HR Staff</h1>
+    <button (click)="onCancel()" class="close-btn">&times;</button>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="staff-form">
+    <div class="form-group">
+      <label>Email *</label>
+      <input type="email" formControlName="email" placeholder="e.g. james@nexorax.org" />
+      @if (form.controls.email.invalid && form.controls.email.touched) {
+        <span class="error">Valid email is required</span>
+      }
+    </div>
+
+    <div class="form-group">
+      <label>Password *</label>
+      <input type="password" formControlName="password" placeholder="Min 8 characters" />
+      @if (form.controls.password.invalid && form.controls.password.touched) {
+        <span class="error">Password must be at least 8 characters</span>
+      }
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Department *</label>
+        <select formControlName="department">
+          <option value="HR">HR & Staff</option>
+          <option value="Volunteers">Volunteers</option>
+          <option value="CRM">CRM</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Position *</label>
+        <input type="text" formControlName="position" placeholder="e.g. HR Manager" />
+        @if (form.controls.position.invalid && form.controls.position.touched) {
+          <span class="error">Position is required</span>
+        }
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Hire Date *</label>
+      <input type="date" formControlName="hire_date" />
+      @if (form.controls.hire_date.invalid && form.controls.hire_date.touched) {
+        <span class="error">Hire date is required</span>
+      }
+    </div>
+
+    @if (errorMessage) {
+      <div class="alert alert-error">{{ errorMessage }}</div>
+    }
+
+    <div class="form-actions">
+      <button type="button" (click)="onCancel()" class="btn btn-outline">Cancel</button>
+      <button type="submit" [disabled]="isSubmitting" class="btn btn-success">
+        {{ isSubmitting ? 'Creating...' : 'Create Staff' }}
+      </button>
+    </div>
+  </form>
+</div>
