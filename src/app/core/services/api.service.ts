@@ -10,11 +10,9 @@ export class ApiService {
   private baseUrl = 'http://localhost:8000/api/';
   private csrfToken: string | null = null;
 
-  // ✅ Global error handler
   errorMessageSubject = new BehaviorSubject<string | null>(null);
   errorMessage$ = this.errorMessageSubject.asObservable();
 
-  // ✅ Fetch CSRF token on app start
   ensureCsrf(): Observable<any> {
     return this.http.get(`${this.baseUrl}auth/csrf/`, { withCredentials: true }).pipe(
       catchError(err => {
@@ -24,7 +22,6 @@ export class ApiService {
     );
   }
 
-  // ✅ Get CSRF token (with fallback to document.cookie)
   private getCsrfToken(): string | null {
     if (this.csrfToken) return this.csrfToken;
     
@@ -41,9 +38,7 @@ export class ApiService {
     return null;
   }
 
-  // ✅ Login with CSRF
   login(email: string, password: string): Observable<any> {
-    // ✅ First, ensure CSRF token is available
     const csrf = this.getCsrfToken();
     if (!csrf) {
       return throwError(() => 'Security token missing. Please refresh the page.');
@@ -57,16 +52,11 @@ export class ApiService {
     return this.http.post(
       `${this.baseUrl}auth/login/`,
       { email, password },
-      { 
-        headers, 
-        withCredentials: true // ✅ Critical for session cookies
-      }
-    ).pipe(
-      catchError(this.handleError.bind(this))
-    );
+      { headers, withCredentials: true }
+    ).pipe(catchError(this.handleError.bind(this)));
   }
 
-  // ✅ All other requests must send credentials
+  // ✅ ADD THESE METHODS
   get<T>(url: string): Observable<T> {
     const csrf = this.getCsrfToken();
     const headers = new HttpHeaders({
@@ -76,9 +66,7 @@ export class ApiService {
     return this.http.get<T>(`${this.baseUrl}${url}`, {
       headers,
       withCredentials: true
-    }).pipe(
-      catchError(this.handleError.bind(this))
-    );
+    }).pipe(catchError(this.handleError.bind(this)));
   }
 
   post<T>(url: string, body: unknown): Observable<T> {
@@ -90,9 +78,31 @@ export class ApiService {
     return this.http.post<T>(`${this.baseUrl}${url}`, body, {
       headers,
       withCredentials: true
-    }).pipe(
-      catchError(this.handleError.bind(this))
-    );
+    }).pipe(catchError(this.handleError.bind(this)));
+  }
+
+  put<T>(url: string, body: unknown): Observable<T> {
+    const csrf = this.getCsrfToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      ...(csrf ? { 'X-CSRFToken': csrf } : {})
+    });
+    return this.http.put<T>(`${this.baseUrl}${url}`, body, {
+      headers,
+      withCredentials: true
+    }).pipe(catchError(this.handleError.bind(this)));
+  }
+
+  delete<T>(url: string): Observable<T> {
+    const csrf = this.getCsrfToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      ...(csrf ? { 'X-CSRFToken': csrf } : {})
+    });
+    return this.http.delete<T>(`${this.baseUrl}${url}`, {
+      headers,
+      withCredentials: true
+    }).pipe(catchError(this.handleError.bind(this)));
   }
 
   private handleError(error: HttpErrorResponse) {
